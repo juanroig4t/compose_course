@@ -1,7 +1,7 @@
 # Curso de compose y arquitectura 📱📲
 
 ##	Introducción
--	Historia
+-	[Historia](docs/Historia.md)
 -	¿Porque usar Compose?
 
 ##	Iniciar un proyecto desde 0

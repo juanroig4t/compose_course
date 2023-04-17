@@ -2,7 +2,7 @@
 
 ##	Introducción
 -	[Historia](docs/Historia.md)
--	¿Porque usar Compose?
+-	[¿Porque usar Compose?](docs/wye-use.md)
 
 ##	Iniciar un proyecto desde 0
 -	Actualidad y tendencia en el desarrollo Android.

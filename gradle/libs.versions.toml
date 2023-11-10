@@ -7,7 +7,23 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.8.0"
-compose-bom = "2023.10.00"
+compose-bom = "2023.10.01"
+ksp = "1.8.21-1.0.11"
+# Splashscreen is used to show the splash screen
+splashscreen = "1.0.1"
+# Hilt is used for dependency injection
+hilt = "2.48.1"
+androidxHilt = "1.1.0"
+# Retrofit and OkHttp are used to communicate with the network
+okhttp = "4.11.0"
+retrofit = "2.9.0"
+retrofitKotlinxSerializationJson = "1.0.0"
+# Room is used to store data in the database
+room = "2.6.0"
+# DataStore is used to store data in the preferences
+dataStore = "1.0.0"
+# spotless is used to format the code
+spotless = "6.13.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -24,10 +40,36 @@ ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
+# splashscreen is used to show the splash screen
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+# dataStore is used to store data in the preferences
+dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "dataStore" }
+dataStore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
+# Hilt is used to dependency injection
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+# Retrofit and OkHttp are used to communicate with the network
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofitKotlinxSerializationJson = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
+# Room is used to store data in the database
+room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
+android-library = { id = "com.android.library", version.ref = "com-android-application" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
-

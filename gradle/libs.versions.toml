@@ -61,6 +61,8 @@ retrofitKotlinxSerializationJson = { group = "com.jakewharton.retrofit", name = 
 room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+# Material icon extended
+androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 
 [plugins]
@@ -73,4 +75,4 @@ hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
-compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose"]
+compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose", "androidx-compose-material-iconsExtended"]

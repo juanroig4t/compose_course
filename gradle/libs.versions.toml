@@ -73,3 +73,4 @@ hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
+compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose"]

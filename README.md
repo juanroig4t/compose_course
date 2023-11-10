@@ -47,3 +47,6 @@
 -	Inyección de dependencias con hilt
 
 
+## Documentación
+-	[Jetpack Compose](https://developer.android.com/jetpack/compose)
+-	[Material3](https://m3.material.io)

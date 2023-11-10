@@ -26,6 +26,7 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.juanroig.composecourse.ui.screen.BasicLayoutsScreen
 import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
 
 class MainActivity : ComponentActivity() {

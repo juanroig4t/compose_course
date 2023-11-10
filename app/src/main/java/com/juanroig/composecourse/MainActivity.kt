@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.juanroig.composecourse.ui.screen.TextFieldScreen
+import com.juanroig.composecourse.ui.screen.ButtonScreen
 import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +20,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TextFieldScreen()
+                    ButtonScreen()
                 }
             }
         }
     }
 }
-

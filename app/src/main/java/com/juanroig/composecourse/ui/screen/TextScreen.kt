@@ -39,9 +39,8 @@ fun TextScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-
         Text(
-            text ="Jetpack Compose",
+            text = "Jetpack Compose",
             modifier = Modifier.fillMaxWidth(),
             color = Color.White,
             fontSize = 32.sp,
@@ -100,12 +99,12 @@ fun TextScreen() {
 
         Text(
             text = "Texto largo multilinea sin limite\n" +
-                    "Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.Loren ipsum dolor sit amet. " +
-                    "Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.Loren ipsum dolor sit amet. " +
-                    "Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.Loren ipsum dolor sit amet. " +
-                    "Lorem ipsum dolor sit amet. Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.",
+                "Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.Loren ipsum dolor sit amet. " +
+                "Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.Loren ipsum dolor sit amet. " +
+                "Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.Loren ipsum dolor sit amet. " +
+                "Lorem ipsum dolor sit amet. Loren ipsum dolor sit amet. Lorem ipsum dolor sit amet.",
             color = Color.LightGray,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge
         )
 
         var texto by remember {
@@ -114,9 +113,8 @@ fun TextScreen() {
 
         TextField(
             value = texto,
-            onValueChange = { texto = it },
+            onValueChange = { texto = it }
         )
-
     }
 }
 

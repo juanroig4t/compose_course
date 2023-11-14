@@ -24,6 +24,9 @@ room = "2.6.0"
 dataStore = "1.0.0"
 # spotless is used to format the code
 spotless = "6.13.0"
+#Coil is used to load images
+coil = "2.2.2"
+
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -63,7 +66,8 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 # Material icon extended
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
-
+# Coil is used to load images
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
@@ -75,4 +79,4 @@ hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
-compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose", "androidx-compose-material-iconsExtended"]
+compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose", "androidx-compose-material-iconsExtended", "coil-compose"]

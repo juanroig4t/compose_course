@@ -3,24 +3,15 @@ package com.juanroig.composecourse.ui.screen
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -43,7 +34,7 @@ fun CardScreen() {
     ) {
         Card(
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             ),
             modifier = Modifier
                 .size(width = 240.dp, height = 100.dp)
@@ -52,7 +43,7 @@ fun CardScreen() {
                 text = "Filled",
                 modifier = Modifier
                     .padding(16.dp),
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
 
@@ -67,13 +58,13 @@ fun CardScreen() {
                 text = "Elevated",
                 modifier = Modifier
                     .padding(16.dp),
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
 
         OutlinedCard(
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
+                containerColor = MaterialTheme.colorScheme.surface
             ),
             border = BorderStroke(1.dp, Color.Black),
             modifier = Modifier
@@ -83,7 +74,7 @@ fun CardScreen() {
                 text = "Outlined",
                 modifier = Modifier
                     .padding(16.dp),
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
     }

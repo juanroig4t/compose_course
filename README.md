@@ -50,3 +50,4 @@
 ## Documentación
 -	[Jetpack Compose](https://developer.android.com/jetpack/compose)
 -	[Material3](https://m3.material.io)
+-   [Coil](https://coil-kt.github.io/coil/compose/)

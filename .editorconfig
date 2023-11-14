@@ -1,0 +1,7 @@
+# https://editorconfig.org/
+# This configuration is used by ktlint when spotless invokes it
+
+[*.{kt,kts}]
+disabled_rules=no-wildcard-imports
+ij_kotlin_allow_trailing_comma_on_call_site = false
+ij_kotlin_allow_trailing_comma = false

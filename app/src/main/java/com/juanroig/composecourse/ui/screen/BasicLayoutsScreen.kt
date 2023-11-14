@@ -83,10 +83,7 @@ fun BasicLayoutsScreen() {
 
             )
         }
-
     }
-
-
 }
 
 @Preview(showBackground = true)

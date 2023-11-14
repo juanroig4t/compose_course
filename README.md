@@ -23,13 +23,13 @@
     -	Card
     -	Surface, Scaffol
     -	Divider
-    -	DropdownMenu
+    -	DropdownMenu (RecyclerView)
     -	Slider
     -	Dialogs y Snackbar
-    -	RecyclerView
     -	FloatingActionButton
     -	ModalDrawer
     -	BottomBar, TopBar, NavRail
+    -	Animaciones
 -	Navegación
 
 ##	Arquitectura

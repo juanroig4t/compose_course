@@ -14,37 +14,37 @@
 
 ##	Compose
 -	Componentes
-    -	Layouts
-    -	Text y TextField
-    -	Button
-    -	Image
-    -	ProgressBar
-    -	Control de selección (Switch, CheckBox, RadioButton)
-    -	Card
-    -	Surface, Scaffol
-    -	Divider
-    -	DropdownMenu (RecyclerView)
-    -	Slider
-    -	Dialogs y Snackbar
-    -	FloatingActionButton
-    -	ModalDrawer
-    -	BottomBar, TopBar, NavRail
-    -	Animaciones
--	Navegación
+  -	Layouts
+  -	Text y TextField
+  -	Button
+  -	Image
+  -	ProgressBar
+  -	Control de selección (Switch, CheckBox, RadioButton)
+  -	Card
+  -	Surface, Scaffold
+  -	Divider
+  -	DropdownMenu (RecyclerView)
+  -	Slider
+  -	Dialogs y Snackbar (FloatingActionButton)
+  -	SplashScreen
+  -	Animaciones
+  -	ModalDrawer
+  -	BottomBar, TopBar, NavRail
+  -	Navegación
 
 ##	Arquitectura
--	Principios comunes de arquitectura
--	Arquitectura recomendada
--	Capa de UI
-    - MVVM
-    -	Estados de la UI
-    -	Unidirectional data Flow
+- Principios comunes de arquitectura
+- Arquitectura recomendada
+- Capa de UI
+  - MVVM
+  -	Estados de la UI
+  -	Unidirectional data Flow
 -	Capa de dominio
-    -	Casos de uso
--	Capa de datos
-    -	Repositorios
-    -	Datasource (Room, Retrofit, Datastore, sensores …)
--	Inyección de dependencias con hilt
+  -	Casos de uso
+- Capa de datos
+  -	Repositorios
+  -	Datasource (Room, Retrofit, Datastore, sensores …)
+- Inyección de dependencias con hilt
 
 
 ## Documentación

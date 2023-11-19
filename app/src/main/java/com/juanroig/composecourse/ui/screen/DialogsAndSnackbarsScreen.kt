@@ -22,7 +22,6 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -51,7 +50,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DialogsAndSnackbarsScreen() {
-
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -78,7 +76,6 @@ fun DialogsAndSnackbarsScreen() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             var showAlertDialog by remember { mutableStateOf(false) }
             Button(
                 onClick = { showAlertDialog = true }
@@ -86,7 +83,7 @@ fun DialogsAndSnackbarsScreen() {
                 Text("Alert Dialog")
             }
 
-            if (showAlertDialog)
+            if (showAlertDialog) {
                 CustomAlertDialog(
                     onDismissRequest = { showAlertDialog = false },
                     onConfirmation = { showAlertDialog = false },
@@ -94,6 +91,7 @@ fun DialogsAndSnackbarsScreen() {
                     dialogText = "Loren ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                     icon = Icons.Outlined.Info
                 )
+            }
 
             var showCustomDialog by remember { mutableStateOf(false) }
             ElevatedButton(onClick = { showCustomDialog = true }) {
@@ -102,13 +100,14 @@ fun DialogsAndSnackbarsScreen() {
                 Text("Custom Image Dialog")
             }
 
-            if(showCustomDialog)
+            if (showCustomDialog) {
                 CustomDialogWithImage(
                     onDismissRequest = { showCustomDialog = false },
                     onConfirmation = { showCustomDialog = false },
                     painter = painterResource(id = R.drawable.africa),
-                    imageDescription = "Africa image",
+                    imageDescription = "Africa image"
                 )
+            }
 
             FilledTonalButton(onClick = {
                 scope.launch {
@@ -132,10 +131,8 @@ fun DialogsAndSnackbarsScreen() {
             }) {
                 Text(text = "Show snackbar with action")
             }
-
         }
     }
-
 }
 
 @Composable
@@ -144,7 +141,7 @@ fun CustomAlertDialog(
     onConfirmation: () -> Unit,
     dialogTitle: String,
     dialogText: String,
-    icon: ImageVector,
+    icon: ImageVector
 ) {
     AlertDialog(
         icon = {
@@ -157,7 +154,7 @@ fun CustomAlertDialog(
             Text(text = dialogText)
         },
         onDismissRequest = {
-            //onDismissRequest()
+            // onDismissRequest()
         },
         confirmButton = {
             TextButton(
@@ -185,7 +182,7 @@ fun CustomDialogWithImage(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     painter: Painter,
-    imageDescription: String,
+    imageDescription: String
 ) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
@@ -194,13 +191,13 @@ fun CustomDialogWithImage(
                 .fillMaxWidth()
                 .height(375.dp)
                 .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
+            shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     painter = painter,
@@ -211,22 +208,22 @@ fun CustomDialogWithImage(
                 )
                 Text(
                     text = "This is a dialog with buttons and an image.",
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(16.dp)
                 )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     TextButton(
                         onClick = { onDismissRequest() },
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(8.dp)
                     ) {
                         Text("Dismiss")
                     }
                     TextButton(
                         onClick = { onConfirmation() },
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(8.dp)
                     ) {
                         Text("Confirm")
                     }
@@ -258,7 +255,7 @@ fun DialogsCustomImagePreview() {
             onDismissRequest = {},
             onConfirmation = {},
             painter = painterResource(id = R.drawable.africa),
-            imageDescription = "Africa image",
+            imageDescription = "Africa image"
         )
     }
 }

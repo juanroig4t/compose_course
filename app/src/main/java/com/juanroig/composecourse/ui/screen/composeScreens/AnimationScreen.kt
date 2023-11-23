@@ -1,4 +1,4 @@
-package com.juanroig.composecourse.ui.screen
+package com.juanroig.composecourse.ui.screen.composeScreens
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,7 +28,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
@@ -55,7 +53,6 @@ import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
 
 @Composable
 fun AnimationScreen() {
-
     var visible by remember {
         mutableStateOf(true)
     }
@@ -67,7 +64,6 @@ fun AnimationScreen() {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         AnimatedAppearDisappear(visible) {
             visible = !visible
         }
@@ -81,7 +77,6 @@ fun AnimationScreen() {
         AnimationChangePosition()
 
         AnimatedPadding()
-
     }
 
 //    AnimatedElevation()
@@ -105,8 +100,10 @@ fun AnimatedTextAndColorScale() {
         animationSpec = infiniteRepeatable(tween(1000), RepeatMode.Reverse),
         label = "scale"
     )
-    Column (horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Text(
                 text = "Hello",
@@ -124,7 +121,6 @@ fun AnimatedTextAndColorScale() {
             )
         }
     }
-
 }
 
 @Composable
@@ -213,9 +209,10 @@ private fun AnimationChangePosition() {
             IntOffset.Zero
         }
         val offset = animateIntOffsetAsState(
-            targetValue = offsetTarget, label = "offset",
+            targetValue = offsetTarget,
+            label = "offset",
             animationSpec = tween(
-                durationMillis = 1000,
+                durationMillis = 1000
             )
         )
         Box(
@@ -313,7 +310,6 @@ private fun ColumnScope.AnimatedAppearDisappear(
     visible: Boolean,
     changeVisibility: () -> Unit = {}
 ) {
-
     Text(text = "Animacion mostrar / ocultar")
 
     Spacer(modifier = Modifier.size(16.dp))
@@ -328,11 +324,11 @@ private fun ColumnScope.AnimatedAppearDisappear(
                 .background(color = Color.Blue)
                 .padding(20.dp)
         )
-
     }
 
-    if (visible)
+    if (visible) {
         Spacer(modifier = Modifier.size(16.dp))
+    }
 
     Box(
         modifier = Modifier

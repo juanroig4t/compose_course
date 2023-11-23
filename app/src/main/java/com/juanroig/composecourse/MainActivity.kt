@@ -13,11 +13,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.juanroig.composecourse.ui.screen.AnimationScreen
-import com.juanroig.composecourse.ui.screen.DialogsAndSnackbarsScreen
+import androidx.navigation.compose.rememberNavController
+import com.juanroig.composecourse.ui.navigation.NavigationComponent
 import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,12 +55,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComposeCourseTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AnimationScreen()
+                    NavigationComponent(navController = rememberNavController())
                 }
             }
         }

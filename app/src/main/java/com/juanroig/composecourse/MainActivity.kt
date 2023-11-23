@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.juanroig.composecourse.ui.MovieApp
 import com.juanroig.composecourse.ui.navigation.NavigationComponent
 import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
 
@@ -59,7 +60,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationComponent(navController = rememberNavController())
+                    MovieApp()
                 }
             }
         }

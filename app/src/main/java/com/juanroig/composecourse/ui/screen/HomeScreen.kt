@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     goToDetail: (movieId: Int) -> Unit
@@ -29,42 +28,29 @@ fun HomeScreen(
     var textFieldText by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Home") }
-            )
-        },
-        bottomBar = {
-            Text(text = "Bottom bar")
-        }
-
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Home Screen", modifier = Modifier.padding(16.dp))
+        Text(text = "Home Screen", modifier = Modifier.padding(16.dp))
 
-            TextField(value = textFieldText, onValueChange = {
-                textFieldText = it
-            })
+        TextField(value = textFieldText, onValueChange = {
+            textFieldText = it
+        })
 
-            Button(onClick = {
-                if (textFieldText.isDigitsOnly() && textFieldText.isNotBlank()) {
-                    goToDetail(textFieldText.toInt())
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Please enter a valid number",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }) {
-                Text(text = "Go to Detail")
+        Button(onClick = {
+            if (textFieldText.isDigitsOnly() && textFieldText.isNotBlank()) {
+                goToDetail(textFieldText.toInt())
+            } else {
+                Toast.makeText(
+                    context,
+                    "Please enter a valid number",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+        }) {
+            Text(text = "Go to Detail")
         }
     }
 }

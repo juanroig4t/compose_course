@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.juanroig.composecourse.ui.screen.AnimationScreen
 import com.juanroig.composecourse.ui.screen.DialogsAndSnackbarsScreen
 import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
 import kotlinx.coroutines.delay
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DialogsAndSnackbarsScreen()
+                    AnimationScreen()
                 }
             }
         }

@@ -26,6 +26,8 @@ dataStore = "1.0.0"
 spotless = "6.13.0"
 #Coil is used to load images
 coil = "2.2.2"
+# Navigation compose
+androidxNavigation = "2.7.5"
 
 
 [libraries]
@@ -68,6 +70,8 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
 # Coil is used to load images
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+# Navigation compose
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }

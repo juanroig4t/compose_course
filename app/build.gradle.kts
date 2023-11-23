@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
 
+    implementation(libs.androidx.navigation.compose)
+
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose.bundle)
 

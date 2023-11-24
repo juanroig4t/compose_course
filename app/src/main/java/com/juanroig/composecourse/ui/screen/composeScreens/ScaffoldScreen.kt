@@ -1,4 +1,4 @@
-package com.juanroig.composecourse.ui.screen
+package com.juanroig.composecourse.ui.screen.composeScreens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

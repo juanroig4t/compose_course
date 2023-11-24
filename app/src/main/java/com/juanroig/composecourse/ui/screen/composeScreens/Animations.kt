@@ -1,4 +1,4 @@
-package com.juanroig.composecourse.ui.screen
+package com.juanroig.composecourse.ui.screen.composeScreens
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -93,10 +93,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.compose.AsyncImage
 import com.juanroig.composecourse.R
+import kotlinx.coroutines.launch
 import java.net.URLDecoder
 import java.net.URLEncoder
 import kotlin.math.roundToInt
-import kotlinx.coroutines.launch
 
 @Preview
 @Composable
@@ -492,6 +492,7 @@ enum class BoxState {
     Collapsed,
     Expanded
 }
+
 @Preview
 @Composable
 fun TransitionExampleConcurrent() {
@@ -670,7 +671,8 @@ fun AnimationLayout() {
             IntOffset.Zero
         }
         val offset = animateIntOffsetAsState(
-            targetValue = offsetTarget, label = "offset"
+            targetValue = offsetTarget,
+            label = "offset"
         )
         Box(
             modifier = Modifier
@@ -716,7 +718,6 @@ fun AnimateAlignment() {
                 toggled = !toggled
             }
     ) {
-
         Box(
             modifier = Modifier
                 .size(100.dp)
@@ -799,7 +800,8 @@ fun AnimateBetweenComposableDestinations() {
     // [START android_compose_animate_destinations]
     val navController = rememberNavController()
     NavHost(
-        navController = navController, startDestination = "landing",
+        navController = navController,
+        startDestination = "landing",
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }
     ) {
@@ -818,7 +820,8 @@ fun AnimateBetweenComposableDestinations() {
             enterTransition = {
                 fadeIn(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        300,
+                        easing = LinearEasing
                     )
                 ) + slideIntoContainer(
                     animationSpec = tween(300, easing = EaseIn),
@@ -828,7 +831,8 @@ fun AnimateBetweenComposableDestinations() {
             exitTransition = {
                 fadeOut(
                     animationSpec = tween(
-                        300, easing = LinearEasing
+                        300,
+                        easing = LinearEasing
                     )
                 ) + slideOutOfContainer(
                     animationSpec = tween(300, easing = EaseOut),
@@ -848,7 +852,6 @@ fun AnimateBetweenComposableDestinations() {
     }
     // [END android_compose_animate_destinations]
 }
-
 
 @Composable
 private fun ScreenLanding(onItemClicked: (String) -> Unit) {
@@ -933,7 +936,7 @@ private val randomSizedPhotos = listOf(
     randomSampleImageUrl(width = 500, height = 500),
     randomSampleImageUrl(width = 300, height = 400),
     randomSampleImageUrl(width = 1600, height = 900),
-    randomSampleImageUrl(width = 500, height = 500),
+    randomSampleImageUrl(width = 500, height = 500)
 )
 
 private fun randomSampleImageUrl(width: Int, height: Int): String {

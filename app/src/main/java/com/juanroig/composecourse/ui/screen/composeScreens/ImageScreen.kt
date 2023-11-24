@@ -1,4 +1,4 @@
-package com.juanroig.composecourse.ui.screen
+package com.juanroig.composecourse.ui.screen.composeScreens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

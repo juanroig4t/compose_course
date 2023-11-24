@@ -14,17 +14,17 @@ import kotlinx.coroutines.CoroutineScope
 fun rememberMovieAppState(
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    topBarState: MutableState<TopBarState> = remember { mutableStateOf(TopBarState()) },
+    topBarState: MutableState<TopBarState> = remember { mutableStateOf(TopBarState()) }
 ): MovieAppState = remember(navController) {
     MovieAppState(
         navController = navController,
         coroutineScope = coroutineScope,
-        topBarState = topBarState,
+        topBarState = topBarState
     )
 }
 
 data class MovieAppState(
     val navController: NavHostController,
     val coroutineScope: CoroutineScope,
-    val topBarState: MutableState<TopBarState>,
+    val topBarState: MutableState<TopBarState>
 )

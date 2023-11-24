@@ -28,36 +28,35 @@ class MainActivity : ComponentActivity() {
             setKeepOnScreenCondition {
                 viewModel.showSplashScreen
             }
-            setOnExitAnimationListener { screen ->
-                val zoomX = ObjectAnimator.ofFloat(
-                    screen.iconView,
-                    View.SCALE_X,
-                    0.4f,
-                    0.0f
-                )
-                zoomX.interpolator = OvershootInterpolator()
-                zoomX.duration = 1000L
-                zoomX.doOnEnd { screen.remove() }
-
-                val zoomY = ObjectAnimator.ofFloat(
-                    screen.iconView,
-                    View.SCALE_Y,
-                    0.4f,
-                    0.0f
-                )
-                zoomY.interpolator = OvershootInterpolator()
-                zoomY.duration = 1000L
-                zoomY.doOnEnd { screen.remove() }
-
-                zoomX.start()
-                zoomY.start()
-            }
+//            setOnExitAnimationListener { screen ->
+//                val zoomX = ObjectAnimator.ofFloat(
+//                    screen.iconView,
+//                    View.SCALE_X,
+//                    0.4f,
+//                    0.0f
+//                )
+//                zoomX.interpolator = OvershootInterpolator()
+//                zoomX.duration = 1000L
+//                zoomX.doOnEnd { screen.remove() }
+//
+//                val zoomY = ObjectAnimator.ofFloat(
+//                    screen.iconView,
+//                    View.SCALE_Y,
+//                    0.4f,
+//                    0.0f
+//                )
+//                zoomY.interpolator = OvershootInterpolator()
+//                zoomY.duration = 1000L
+//                zoomY.doOnEnd { screen.remove() }
+//
+//                zoomX.start()
+//                zoomY.start()
+//            }
         }
 
         setContent {
             ComposeCourseTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     MovieApp()

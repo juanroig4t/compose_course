@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.gradle)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
     packaging {
         resources {
@@ -49,7 +52,7 @@ android {
 dependencies {
 
     implementation(project(":domain"))
-    
+
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
 
@@ -59,6 +62,10 @@ dependencies {
     implementation(libs.bundles.compose.bundle)
 
     implementation(libs.androidx.core.splashscreen)
+
+    // Hilt Dependency Injection
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

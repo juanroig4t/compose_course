@@ -1,14 +1,15 @@
 [versions]
-com-android-application = "8.1.2"
-org-jetbrains-kotlin-android = "1.9.10"
+com-android-application = "8.1.4"
 core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.2"
-activity-compose = "1.8.0"
+activity-compose = "1.8.1"
 compose-bom = "2023.10.01"
-ksp = "1.8.21-1.0.11"
+kotlin = "1.9.20"
+ksp = "1.9.20-1.0.14"
+androidxComposeCompiler = "1.5.4"
 # Splashscreen is used to show the splash screen
 splashscreen = "1.0.1"
 # Hilt is used for dependency injection
@@ -17,7 +18,7 @@ androidxHilt = "1.1.0"
 # Retrofit and OkHttp are used to communicate with the network
 okhttp = "4.11.0"
 retrofit = "2.9.0"
-retrofitKotlinxSerializationJson = "1.0.0"
+retrofitKotlinxSerializationJson = "1.5.0"
 # Room is used to store data in the database
 room = "2.6.0"
 # DataStore is used to store data in the preferences
@@ -25,7 +26,7 @@ dataStore = "1.0.0"
 # spotless is used to format the code
 spotless = "6.13.0"
 #Coil is used to load images
-coil = "2.2.2"
+coil = "2.4.0"
 # Navigation compose
 androidxNavigation = "2.7.5"
 appcompat = "1.6.1"
@@ -85,8 +86,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
 android-library = { id = "com.android.library", version.ref = "com-android-application" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

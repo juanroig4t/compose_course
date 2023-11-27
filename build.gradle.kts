@@ -3,6 +3,14 @@ plugins {
     alias(libs.plugins.com.android.application) apply false
     alias(libs.plugins.org.jetbrains.kotlin.android) apply false
     alias(libs.plugins.spotless)
+    alias(libs.plugins.android.library) apply false
+}
+
+ext {
+    extra["compile"] = 34
+    extra["target"] = 34
+    extra["minSdk"] = 24
+    extra["build"] = "34.0.0"
 }
 
 subprojects {

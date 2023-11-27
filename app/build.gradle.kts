@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.juanroig.composecourse"
-    compileSdk = 34
+    compileSdk = rootProject.extra["compile"] as Int?
 
     defaultConfig {
         applicationId = "com.juanroig.composecourse"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = rootProject.extra["minSdk"] as Int?
+        targetSdk = rootProject.extra["target"] as Int?
         versionCode = 1
         versionName = "1.0"
 
@@ -48,6 +48,8 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+    
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
 

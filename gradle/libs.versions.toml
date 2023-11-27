@@ -28,6 +28,8 @@ spotless = "6.13.0"
 coil = "2.2.2"
 # Navigation compose
 androidxNavigation = "2.7.5"
+appcompat = "1.6.1"
+material = "1.10.0"
 
 
 [libraries]
@@ -74,6 +76,8 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
 # Windows Size class
 androidx-compose-material3-windowSizeClass = {group = "androidx.compose.material3", name = "material3-window-size-class"}
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }

@@ -1,6 +1,5 @@
 package com.juanroig.composecourse.ui.component
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,7 +27,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MovieDrawer() {
-
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(0)
     }
@@ -53,7 +51,7 @@ fun MovieDrawer() {
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
             badgedCount = 10
-        ),
+        )
     )
 
     ModalDrawerSheet {
@@ -77,7 +75,6 @@ fun MovieDrawer() {
                 modifier = Modifier
                     .padding(NavigationDrawerItemDefaults.ItemPadding)
             )
-
         }
     }
 }

@@ -72,6 +72,8 @@ androidx-compose-material-iconsExtended = { group = "androidx.compose.material",
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 # Navigation compose
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
+# Windows Size class
+androidx-compose-material3-windowSizeClass = {group = "androidx.compose.material3", name = "material3-window-size-class"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
@@ -83,4 +85,4 @@ hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [bundles]
-compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose", "androidx-compose-material-iconsExtended", "coil-compose"]
+compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose", "androidx-compose-material-iconsExtended", "coil-compose", "androidx-compose-material3-windowSizeClass"]

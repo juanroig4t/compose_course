@@ -12,4 +12,12 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntity ORDER BY voteAverage DESC LIMIT 10")
     suspend fun getTopTenMovies(): List<MovieEntity>
 
+    @Transaction
+    @Query("SELECT * FROM MovieEntity ORDER BY popularity DESC")
+    suspend fun getPopularMovies(): List<MovieEntity>
+
+    @Transaction
+    @Query("SELECT * FROM MovieEntity WHERE id = :id")
+    suspend fun getMovieById(id: Int): MovieEntity
+
 }

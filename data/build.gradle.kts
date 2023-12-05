@@ -1,3 +1,5 @@
+import java.util.Properties
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.library)
@@ -6,6 +8,9 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.gradle)
 }
+
+val localProperties = Properties()
+localProperties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "com.juanroig.composecourse.data"
@@ -22,6 +27,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -29,6 +38,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "URL_BASE", "\"${localProperties.getProperty("url_base")}\"")
+            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("api_key")}\"")
+        }
+        debug {
+            buildConfigField("String", "URL_BASE", "\"${localProperties.getProperty("url_base")}\"")
+            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("api_key")}\"")
         }
     }
     compileOptions {
@@ -61,6 +77,7 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.okhttp)
     implementation(libs.retrofit)
+    implementation(libs.retrofit.gson.serialization)
 
     implementation(libs.retrofit.kotlin.serialization)
 

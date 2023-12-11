@@ -1,6 +1,8 @@
 package com.juanroig.composecourse.data.di
 
 import com.juanroig.composecourse.data.BuildConfig
+import com.juanroig.composecourse.data.datasource.MovieRemoteDatasource
+import com.juanroig.composecourse.data.datasource.remote.MovieRemoteDatasourceImp
 import com.juanroig.composecourse.data.datasource.remote.RetrofitMovieNetworkApi
 import com.juanroig.composecourse.data.datasource.remote.util.BasicAuthInterceptor
 import dagger.Module
@@ -19,6 +21,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataSource(
+        retrofitMovieNetworkApi: RetrofitMovieNetworkApi
+    ): MovieRemoteDatasource {
+        return MovieRemoteDatasourceImp(retrofitMovieNetworkApi)
+    }
 
     @Provides
     @Singleton

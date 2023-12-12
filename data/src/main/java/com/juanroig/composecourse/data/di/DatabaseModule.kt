@@ -29,6 +29,6 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun providePrinterDao(db: MovieDatabase): MovieDao = db.movieDao()
+    fun provideMovieDao(db: MovieDatabase): MovieDao = db.movieDao()
 
 }

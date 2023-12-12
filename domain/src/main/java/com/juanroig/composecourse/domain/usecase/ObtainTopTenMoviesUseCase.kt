@@ -5,10 +5,10 @@ import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
 import javax.inject.Inject
 
-class ObtainTopTenMovies @Inject constructor(
+class ObtainTopTenMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend fun invoke(): Result<List<Movie>> {
+    suspend operator fun invoke(): Result<List<Movie>> {
         return movieRepository.getTopTenMovies()
     }
 }

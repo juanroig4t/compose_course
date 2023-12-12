@@ -7,8 +7,9 @@ import com.juanroig.composecourse.data.mapper.toEntity
 import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
+import javax.inject.Inject
 
-class MovieRepositoryImp(
+class MovieRepositoryImp @Inject constructor(
     private val movieDao: MovieDao,
     private val movieRemoteDatasource: MovieRemoteDatasource
 ) : MovieRepository {

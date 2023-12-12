@@ -8,16 +8,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * Module that provides Repository dependencies.
- */
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+interface RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindMovieRepository(
+    fun bindMovieRepository(
         movieRepository: MovieRepositoryImp
     ): MovieRepository
 

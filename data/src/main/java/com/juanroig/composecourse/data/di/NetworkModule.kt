@@ -55,8 +55,8 @@ internal object NetworkModule {
 //            .callTimeout(50000, TimeUnit.MILLISECONDS)
 //            .readTimeout(50000, TimeUnit.MILLISECONDS)
 //            .writeTimeout(50000, TimeUnit.MILLISECONDS)
-            .addInterceptor(loggingInterceptor)
             .addInterceptor(basicAuthInterceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 

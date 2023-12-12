@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.juanroig.composecourse.ui.MovieAppState
 import com.juanroig.composecourse.ui.screen.DetailScreen
-import com.juanroig.composecourse.ui.screen.HomeScreen
+import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen
 
 @Composable
 fun NavigationComponent(

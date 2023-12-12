@@ -62,7 +62,6 @@ fun MovieApp(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(padding)
                 ) {
                     NavigationComponent(
                         navController = appState.navController,

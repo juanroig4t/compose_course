@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juanroig.composecourse.domain.model.core.result.Result
+import com.juanroig.composecourse.domain.repository.MovieRepository
 import com.juanroig.composecourse.domain.usecase.ObtainTopTenMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val obtainTopTenMovies: ObtainTopTenMoviesUseCase
+    private val obtainTopTenMovies: ObtainTopTenMoviesUseCase,
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(HomeState())
@@ -29,6 +31,17 @@ class HomeViewModel @Inject constructor(
 
                 is Result.Success -> {
                     state.copy(topTenMovies = result.data)
+                }
+            }
+
+            movieRepository.getPopularMovies().apply {
+                state = when (this) {
+                    is Result.Error -> {
+                        state.copy(error = this.failure)
+                    }
+                    is Result.Success -> {
+                        state.copy(popularMovies = this.data)
+                    }
                 }
             }
         }

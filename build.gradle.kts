@@ -6,7 +6,7 @@ plugins {
 ext {
     extra["compile"] = 34
     extra["target"] = 34
-    extra["minSdk"] = 24
+    extra["minSdk"] = 26
     extra["build"] = "34.0.0"
 }
 

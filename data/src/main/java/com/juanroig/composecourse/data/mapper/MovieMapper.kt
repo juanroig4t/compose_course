@@ -18,7 +18,8 @@ internal fun MovieEntity.toDomain() = Movie(
     title = title,
     video = video,
     voteAverage = voteAverage,
-    voteCount = voteCount
+    voteCount = voteCount,
+    isFavorite = isFavorite
 )
 
 internal fun MovieDto.toDomain() = Movie(
@@ -35,7 +36,8 @@ internal fun MovieDto.toDomain() = Movie(
     title = title,
     video = video,
     voteAverage = voteAverage,
-    voteCount = voteCount
+    voteCount = voteCount,
+    isFavorite = false
 )
 
 internal fun Movie.toEntity() = MovieEntity(
@@ -52,5 +54,6 @@ internal fun Movie.toEntity() = MovieEntity(
     title = title,
     video = video,
     voteAverage = voteAverage,
-    voteCount = voteCount
+    voteCount = voteCount,
+    isFavorite = isFavorite
 )

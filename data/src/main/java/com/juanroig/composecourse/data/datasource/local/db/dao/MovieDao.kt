@@ -24,4 +24,7 @@ interface MovieDao {
     @Query("SELECT * FROM MovieEntity WHERE id = :id")
     suspend fun getMovieById(id: Int): MovieEntity
 
+    @Query("UPDATE MovieEntity SET isFavorite = :isFavorite WHERE id = :movieId")
+    suspend fun updateFavorite(movieId: Int, isFavorite: Boolean)
+
 }

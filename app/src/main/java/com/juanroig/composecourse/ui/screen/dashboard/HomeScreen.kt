@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -53,7 +54,7 @@ fun HomeScreen(
     ) {
         TopTenContent(state, goToDetail)
 
-        PopularMoviesContent(state, goToDetail)
+        PopularMoviesContent(state, goToDetail, viewModel::onFavoriteClick)
 
     }
 }
@@ -61,13 +62,14 @@ fun HomeScreen(
 @Composable
 private fun PopularMoviesContent(
     state: HomeState,
-    goToDetailMovie: (movieId: Int) -> Unit
+    goToDetailMovie: (movieId: Int) -> Unit,
+    onFavoriteClick: (movie: Movie) -> Unit
 ) {
     Text(text = "Populares", modifier = Modifier.padding(8.dp))
 
     LazyColumn() {
         itemsIndexed(state.popularMovies) { index, movie ->
-            PopularMovieItem(movie, goToDetailMovie)
+            PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
         }
     }
 }
@@ -75,7 +77,8 @@ private fun PopularMoviesContent(
 @Composable
 private fun PopularMovieItem(
     movie: Movie,
-    goToDetailMovie: (movieId: Int) -> Unit
+    goToDetailMovie: (movieId: Int) -> Unit,
+    onFavoriteClick: (movie: Movie) -> Unit
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -137,13 +140,23 @@ private fun PopularMovieItem(
                     )
 
                     IconButton(
-                        onClick = { /*TODO Add to favorite*/ }
+                        onClick = {
+                            onFavoriteClick(movie)
+                        }
                     ) {
-                        // TODO Change icon and tint if is favorite
-                        Icon(
-                            imageVector = Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Fav icon"
-                        )
+                        // Change icon and tint if is favorite
+                        if (movie.isFavorite) {
+                            Icon(
+                                imageVector = Icons.Outlined.Favorite,
+                                contentDescription = "Fav icon",
+                                tint = Color.Red
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Outlined.FavoriteBorder,
+                                contentDescription = "Fav icon"
+                            )
+                        }
                     }
 
                 }

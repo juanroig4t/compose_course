@@ -49,4 +49,9 @@ class MovieRepositoryImp @Inject constructor(
         return result
     }
 
+    override suspend fun updateFavorite(movieId: Int, isFavorite: Boolean) {
+        movieDao.updateFavorite(movieId, isFavorite)
+    }
+
+
 }

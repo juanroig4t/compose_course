@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -37,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.juanroig.composecourse.domain.model.movie.Movie
+import com.juanroig.composecourse.ui.extension.getColorByRating
 import com.juanroig.composecourse.ui.extension.toYear
 
 @Composable
@@ -49,7 +52,8 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.Start
     ) {
         TopTenContent(state, goToDetail)
@@ -67,8 +71,8 @@ private fun PopularMoviesContent(
 ) {
     Text(text = "Populares", modifier = Modifier.padding(8.dp))
 
-    LazyColumn() {
-        itemsIndexed(state.popularMovies) { index, movie ->
+    Column() {
+        state.popularMovies.forEachIndexed { index, movie ->
             PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
         }
     }
@@ -130,7 +134,7 @@ private fun PopularMovieItem(
                             }
                             withStyle(
                                 style = SpanStyle(
-                                    color = getColorByRating(movie.voteAverage),
+                                    color = movie.voteAverage.getColorByRating(),
                                     fontSize = 20.sp
                                 )
                             ) {
@@ -162,16 +166,6 @@ private fun PopularMovieItem(
                 }
             }
         }
-    }
-}
-
-fun getColorByRating(voteAverage: Double): Color {
-    return if (voteAverage >= 7.0) {
-        Color(0xFF008000)
-    } else if (voteAverage >= 5.0) {
-        Color(0xFF808000)
-    } else {
-        Color(0xFF800000)
     }
 }
 

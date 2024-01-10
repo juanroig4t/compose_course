@@ -5,6 +5,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
 import com.juanroig.composecourse.data.datasource.local.db.model.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -14,11 +15,11 @@ interface MovieDao {
 
     @Transaction
     @Query("SELECT * FROM MovieEntity ORDER BY voteAverage DESC LIMIT 10")
-    suspend fun getTopTenMovies(): List<MovieEntity>
+    fun getTopTenMovies(): Flow<List<MovieEntity>>
 
     @Transaction
     @Query("SELECT * FROM MovieEntity ORDER BY popularity DESC")
-    suspend fun getPopularMovies(): List<MovieEntity>
+    fun getPopularMovies(): Flow<List<MovieEntity>>
 
     @Transaction
     @Query("SELECT * FROM MovieEntity WHERE id = :id")
@@ -26,5 +27,4 @@ interface MovieDao {
 
     @Query("UPDATE MovieEntity SET isFavorite = :isFavorite WHERE id = :movieId")
     suspend fun updateFavorite(movieId: Int, isFavorite: Boolean)
-
 }

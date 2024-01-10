@@ -7,6 +7,8 @@ import com.juanroig.composecourse.data.mapper.toEntity
 import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieRepositoryImp @Inject constructor(
@@ -14,20 +16,25 @@ class MovieRepositoryImp @Inject constructor(
     private val movieRemoteDatasource: MovieRemoteDatasource
 ) : MovieRepository {
 
-    override suspend fun getTopTenMovies(): Result<List<Movie>> {
-
-        val localMovies = movieDao.getTopTenMovies().map { it.toDomain() }
-
-        if(localMovies.isEmpty()) {
-            syncMovies()
-            return Result.Success(movieDao.getTopTenMovies().map { it.toDomain() })
+    override suspend fun getTopTenMovies(): Flow<Result<List<Movie>>> {
+        var listIsEmpty = false
+        val localMovies = movieDao.getTopTenMovies().map { movieList ->
+            listIsEmpty = movieList.isEmpty()
+            Result.Success(movieList.map { it.toDomain() })
         }
 
-        return Result.Success(localMovies)
+        if (listIsEmpty) {
+            syncMovies()
+            return localMovies
+        }
+
+        return localMovies
     }
 
-    override suspend fun getPopularMovies(): Result<List<Movie>> {
-        return Result.Success(movieDao.getPopularMovies().map { it.toDomain() })
+    override fun getPopularMovies(): Flow<Result<List<Movie>>> {
+        return movieDao.getPopularMovies().map {
+            Result.Success(it.map { it.toDomain() })
+        }
     }
 
     override suspend fun getMovieById(id: Int): Result<Movie> {
@@ -35,13 +42,12 @@ class MovieRepositoryImp @Inject constructor(
     }
 
     override suspend fun syncMovies(): Result<Unit> {
-
         var result: Result<Unit> = Result.Success(Unit)
         movieRemoteDatasource.getPopularMovies().apply {
-            if(this is Result.Error) {
-                result = Result.Error( this.failure)
+            if (this is Result.Error) {
+                result = Result.Error(this.failure)
             }
-            if(this is Result.Success) {
+            if (this is Result.Success) {
                 movieDao.insertMovieList(this.data.map { it.toEntity() })
             }
         }
@@ -52,6 +58,4 @@ class MovieRepositoryImp @Inject constructor(
     override suspend fun updateFavorite(movieId: Int, isFavorite: Boolean) {
         movieDao.updateFavorite(movieId, isFavorite)
     }
-
-
 }

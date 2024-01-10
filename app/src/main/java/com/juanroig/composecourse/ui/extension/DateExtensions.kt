@@ -5,7 +5,6 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-
 const val SIMPLE_REQUEST_DATE_FORMAT = "dd/MM/yyyy"
 const val SIMPLE_DATE_FORMAT = "yyyy-MM-dd"
 

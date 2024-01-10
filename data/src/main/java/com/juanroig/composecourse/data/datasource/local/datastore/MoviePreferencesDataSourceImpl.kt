@@ -3,9 +3,9 @@ package com.juanroig.composecourse.data.datasource.local.datastore
 import com.juanroig.composecourse.data.datasource.local.datastore.common.AppDataStore
 import com.juanroig.composecourse.data.datasource.local.datastore.common.DARK_THEME_CONFIG
 import com.juanroig.composecourse.data.datasource.local.datastore.common.THEME_BRAND
-import com.juanroig.composecourse.domain.model.userPreferences.UserData
 import com.juanroig.composecourse.domain.model.userPreferences.DarkThemeConfig
 import com.juanroig.composecourse.domain.model.userPreferences.ThemeBrand
+import com.juanroig.composecourse.domain.model.userPreferences.UserData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
@@ -16,7 +16,6 @@ interface MoviePreferencesDataSource {
 
     suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig)
     fun getUserData(): Flow<UserData>
-
 }
 
 class MoviePreferencesDataSourceImpl @Inject constructor(
@@ -43,5 +42,4 @@ class MoviePreferencesDataSourceImpl @Inject constructor(
             )
         }
     }
-
 }

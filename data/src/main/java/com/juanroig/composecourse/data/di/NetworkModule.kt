@@ -89,5 +89,4 @@ internal object NetworkModule {
             .build()
             .create(RetrofitMovieNetworkApi::class.java)
     }
-
 }

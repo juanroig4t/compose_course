@@ -11,5 +11,4 @@ interface RetrofitMovieNetworkApi {
     suspend fun getPopularMovies(
         @Query("language") language: String
     ): NetworkPagingResponse<List<MovieDto>>
-
 }

@@ -17,5 +17,4 @@ interface RepositoryModule {
     fun bindMovieRepository(
         movieRepository: MovieRepositoryImp
     ): MovieRepository
-
 }

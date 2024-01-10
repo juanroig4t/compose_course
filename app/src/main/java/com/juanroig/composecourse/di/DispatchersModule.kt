@@ -27,6 +27,4 @@ object DispatchersModule {
     @Provides
     @Dispatcher(CustomDispatchers.UNCONFINED)
     fun provideUnconfinedDispatcher() = Dispatchers.Unconfined
-
-
 }

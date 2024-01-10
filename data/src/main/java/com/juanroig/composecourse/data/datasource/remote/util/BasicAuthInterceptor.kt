@@ -18,5 +18,4 @@ internal class BasicAuthInterceptor @Inject constructor() : Interceptor {
 
         return chain.proceed(newRequest)
     }
-
 }

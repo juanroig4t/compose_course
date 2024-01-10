@@ -30,5 +30,4 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideMovieDao(db: MovieDatabase): MovieDao = db.movieDao()
-
 }

@@ -12,6 +12,8 @@ import com.juanroig.composecourse.domain.usecase.AddMovieToFavoriteUseCase
 import com.juanroig.composecourse.domain.usecase.DeleteMovieToFavoriteUseCase
 import com.juanroig.composecourse.domain.usecase.ObtainTopTenMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,36 +30,35 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val result = obtainTopTenMovies()
+            obtainTopTenMovies().onEach { result ->
+                state = when (result) {
+                    is Result.Error -> {
+                        state.copy(error = result.failure)
+                    }
+
+                    is Result.Success -> {
+                        state.copy(topTenMovies = result.data)
+                    }
+                }
+            }.launchIn(viewModelScope)
+
+            obtainPopularMovies()
+        }
+    }
+
+    private fun obtainPopularMovies() {
+        movieRepository.getPopularMovies().onEach { result ->
             state = when (result) {
                 is Result.Error -> {
                     state.copy(error = result.failure)
                 }
 
                 is Result.Success -> {
-                    state.copy(topTenMovies = result.data)
+                    state.copy(popularMovies = result.data)
                 }
             }
-
-            obtainPopularMovies()
-        }
-
+        }.launchIn(viewModelScope)
     }
-
-    private suspend fun obtainPopularMovies() {
-        movieRepository.getPopularMovies().apply {
-            state = when (this) {
-                is Result.Error -> {
-                    state.copy(error = this.failure)
-                }
-
-                is Result.Success -> {
-                    state.copy(popularMovies = this.data)
-                }
-            }
-        }
-    }
-
 
     fun onFavoriteClick(movie: Movie) {
         viewModelScope.launch {
@@ -66,10 +67,6 @@ class HomeViewModel @Inject constructor(
             } else {
                 addMovieToFavoriteUseCase(movie.id)
             }
-
-            obtainPopularMovies()
         }
     }
-
 }
-

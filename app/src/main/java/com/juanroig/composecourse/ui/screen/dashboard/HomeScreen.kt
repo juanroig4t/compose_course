@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
@@ -47,7 +46,6 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     goToDetail: (movieId: Int) -> Unit
 ) {
-
     val state = viewModel.state
 
     Column(
@@ -59,7 +57,6 @@ fun HomeScreen(
         TopTenContent(state, goToDetail)
 
         PopularMoviesContent(state, goToDetail, viewModel::onFavoriteClick)
-
     }
 }
 
@@ -162,7 +159,6 @@ private fun PopularMovieItem(
                             )
                         }
                     }
-
                 }
             }
         }
@@ -177,7 +173,7 @@ private fun TopTenContent(
     Text(text = "Top 10", modifier = Modifier.padding(8.dp))
     LazyRow() {
         itemsIndexed(state.topTenMovies) { index, movie ->
-            RowTopTenMovieItem(movie, index + 1, goToDetailMovie )
+            RowTopTenMovieItem(movie, index + 1, goToDetailMovie)
         }
     }
 }

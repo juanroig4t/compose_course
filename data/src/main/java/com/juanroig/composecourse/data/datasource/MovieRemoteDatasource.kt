@@ -6,5 +6,4 @@ import com.juanroig.composecourse.domain.model.movie.Movie
 interface MovieRemoteDatasource {
 
     suspend fun getPopularMovies(): Result<List<Movie>>
-
 }

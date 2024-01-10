@@ -19,51 +19,69 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.juanroig.composecourse.ui.navigation.Screen
 
 @Composable
-fun MovieDrawer() {
-    var selectedItemIndex by rememberSaveable {
-        mutableStateOf(0)
-    }
+fun MovieDrawer(
+    navController: NavController,
+    toggleDrawerMenu: () -> Unit
+) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
     val items = listOf(
         BottomNavigationItem(
             title = "Inicio",
             selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home
+            unselectedIcon = Icons.Outlined.Home,
+            route = Screen.HomeScreen.route
         ),
         BottomNavigationItem(
             title = "Buscar",
             selectedIcon = Icons.Filled.Search,
-            unselectedIcon = Icons.Outlined.Search
+            unselectedIcon = Icons.Outlined.Search,
+            route = Screen.SearchScreen.route
         ),
         BottomNavigationItem(
             title = "Favoritos",
             selectedIcon = Icons.Filled.Favorite,
-            unselectedIcon = Icons.Outlined.Favorite
+            unselectedIcon = Icons.Outlined.Favorite,
+            route = Screen.FavScreen.route
         ),
         BottomNavigationItem(
             title = "Ajustes",
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
-            badgedCount = 10
+            badgedCount = 10,
+            route = Screen.SettingsScreen.route
         )
     )
 
     ModalDrawerSheet {
         Spacer(modifier = Modifier.height(16.dp))
         items.forEachIndexed() { index, item ->
+            val isSelected = item.route == navBackStackEntry?.destination?.route
             NavigationDrawerItem(
                 label = { Text(text = item.title) },
-                selected = index == selectedItemIndex,
-                onClick = { selectedItemIndex = index },
+                selected = isSelected,
+                onClick = {
+                    toggleDrawerMenu()
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
                 icon = {
                     Icon(
-                        imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
+                        imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
                         contentDescription = item.title
                     )
                 },

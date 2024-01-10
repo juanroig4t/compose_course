@@ -18,51 +18,61 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.juanroig.composecourse.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieBottomAppBar(
     navController: NavController
 ) {
-    var selectedItemIndex by rememberSaveable {
-        mutableStateOf(0)
-    }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
     val items = listOf(
         BottomNavigationItem(
             title = "Inicio",
             selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home
+            unselectedIcon = Icons.Outlined.Home,
+            route = Screen.HomeScreen.route
         ),
         BottomNavigationItem(
             title = "Buscar",
             selectedIcon = Icons.Filled.Search,
-            unselectedIcon = Icons.Outlined.Search
+            unselectedIcon = Icons.Outlined.Search,
+            route = Screen.SearchScreen.route
         ),
         BottomNavigationItem(
             title = "Favoritos",
             selectedIcon = Icons.Filled.Favorite,
-            unselectedIcon = Icons.Outlined.Favorite
+            unselectedIcon = Icons.Outlined.Favorite,
+            route = Screen.FavScreen.route
         ),
         BottomNavigationItem(
             title = "Ajustes",
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
-            badgedCount = 10
+            badgedCount = 10,
+            route = Screen.SettingsScreen.route
         )
     )
 
     NavigationBar() {
-        items.forEachIndexed() { index, item ->
+        items.forEach() { item ->
+            val isSelected = item.route == navBackStackEntry?.destination?.route
             NavigationBarItem(
-                selected = index == selectedItemIndex,
+                selected = isSelected,
                 onClick = {
-                    selectedItemIndex = index
-                    // navController.navigate(item.title)
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 },
                 label = { Text(text = item.title) },
                 icon = {
@@ -76,7 +86,7 @@ fun MovieBottomAppBar(
                         }
                     ) {
                         Icon(
-                            imageVector = if (index == selectedItemIndex) item.selectedIcon else item.unselectedIcon,
+                            imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
                             contentDescription = item.title
                         )
                     }
@@ -91,5 +101,6 @@ data class BottomNavigationItem(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
     val hasNews: Boolean = false,
-    val badgedCount: Int? = null
+    val badgedCount: Int? = null,
+    val route: String
 )

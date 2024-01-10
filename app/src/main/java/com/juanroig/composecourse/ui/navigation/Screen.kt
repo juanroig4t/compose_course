@@ -10,6 +10,10 @@ sealed class Screen(val basicRoute: String, private val navArgs: List<NavArg> = 
         fun createRoute(movieId: Int): String = "$basicRoute/$movieId"
     }
 
+    object SearchScreen : Screen("search_screen")
+    object FavScreen : Screen("fav_screen")
+    object SettingsScreen : Screen("settings_screen")
+
     object DetailOptionalArgumentScreen : Screen("detail_screen", listOf(NavArg.OptionalArg)) {
         fun createRoute(optionalArg: String?): String = "$basicRoute?${NavArg.OptionalArg.key}=$optionalArg"
     }

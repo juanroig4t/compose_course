@@ -36,7 +36,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.ui.extension.getColorByRating
 import com.juanroig.composecourse.ui.extension.toYear
@@ -48,6 +50,8 @@ fun HomeScreen(
 ) {
     val state = viewModel.state
 
+    val popularMovies = viewModel.flowLifecycleState.collectAsStateWithLifecycle().value
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -55,21 +59,22 @@ fun HomeScreen(
         horizontalAlignment = Alignment.Start
     ) {
         TopTenContent(state, goToDetail)
-
-        PopularMoviesContent(state, goToDetail, viewModel::onFavoriteClick)
+        if (popularMovies is Result.Success) {
+            PopularMoviesContent(popularMovies.data, goToDetail, viewModel::onFavoriteClick)
+        }
     }
 }
 
 @Composable
 private fun PopularMoviesContent(
-    state: HomeState,
+    popularMovies: List<Movie>,
     goToDetailMovie: (movieId: Int) -> Unit,
     onFavoriteClick: (movie: Movie) -> Unit
 ) {
     Text(text = "Populares", modifier = Modifier.padding(8.dp))
 
     Column() {
-        state.popularMovies.forEachIndexed { index, movie ->
+        popularMovies.forEachIndexed { index, movie ->
             PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
         }
     }

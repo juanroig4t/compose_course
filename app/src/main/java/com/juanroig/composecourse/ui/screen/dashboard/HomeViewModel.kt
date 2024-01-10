@@ -12,8 +12,11 @@ import com.juanroig.composecourse.domain.usecase.AddMovieToFavoriteUseCase
 import com.juanroig.composecourse.domain.usecase.DeleteMovieToFavoriteUseCase
 import com.juanroig.composecourse.domain.usecase.ObtainTopTenMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +31,13 @@ class HomeViewModel @Inject constructor(
     var state by mutableStateOf(HomeState())
         private set
 
+    val flowLifecycleState: StateFlow<Result<List<Movie>>> = movieRepository.getPopularMovies()
+        .stateIn(
+            scope = viewModelScope,
+            initialValue = Result.Success(emptyList()),
+            started = SharingStarted.WhileSubscribed(5_000)
+        )
+
     init {
         viewModelScope.launch {
             obtainTopTenMovies().onEach { result ->
@@ -41,23 +51,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }.launchIn(viewModelScope)
-
-            obtainPopularMovies()
         }
-    }
-
-    private fun obtainPopularMovies() {
-        movieRepository.getPopularMovies().onEach { result ->
-            state = when (result) {
-                is Result.Error -> {
-                    state.copy(error = result.failure)
-                }
-
-                is Result.Success -> {
-                    state.copy(popularMovies = result.data)
-                }
-            }
-        }.launchIn(viewModelScope)
     }
 
     fun onFavoriteClick(movie: Movie) {

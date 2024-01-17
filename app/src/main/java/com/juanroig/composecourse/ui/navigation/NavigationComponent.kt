@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.juanroig.composecourse.ui.MovieAppState
-import com.juanroig.composecourse.ui.screen.DetailScreen
+import com.juanroig.composecourse.ui.screen.movieDetail.DetailRoute
 import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen
 
 @Composable
@@ -88,9 +88,9 @@ fun dashboardNavHost(
         composable(
             route = Screen.DetailScreen.route
         ) {
-            val movieId = it.arguments?.getString(NavArg.MovieIdArg.key) ?: "0"
+
             appState.topBarState.value = appState.topBarState.value.copy(
-                title = "Detail $movieId",
+                title = "Detalles",
                 showNavigationIcon = true,
                 menuIcon = Icons.Default.ArrowBack,
                 onNavigationIconClick = {
@@ -98,11 +98,7 @@ fun dashboardNavHost(
                 }
             )
 
-            DetailScreen(
-                movieId.toInt(),
-                goToHome = {
-                    dashboardController.popBackStack()
-                }
+            DetailRoute(
             )
         }
     }

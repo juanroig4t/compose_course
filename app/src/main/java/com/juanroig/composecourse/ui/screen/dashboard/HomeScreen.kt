@@ -40,6 +40,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
+import com.juanroig.composecourse.ui.component.FavIconButton
 import com.juanroig.composecourse.ui.extension.getColorByRating
 import com.juanroig.composecourse.ui.extension.toYear
 
@@ -145,25 +146,7 @@ private fun PopularMovieItem(
                         }
                     )
 
-                    IconButton(
-                        onClick = {
-                            onFavoriteClick(movie)
-                        }
-                    ) {
-                        // Change icon and tint if is favorite
-                        if (movie.isFavorite) {
-                            Icon(
-                                imageVector = Icons.Outlined.Favorite,
-                                contentDescription = "Fav icon",
-                                tint = Color.Red
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Outlined.FavoriteBorder,
-                                contentDescription = "Fav icon"
-                            )
-                        }
-                    }
+                    FavIconButton(onFavoriteClick, movie)
                 }
             }
         }

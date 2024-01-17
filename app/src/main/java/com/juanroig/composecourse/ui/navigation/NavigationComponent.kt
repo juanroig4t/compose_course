@@ -10,8 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.juanroig.composecourse.ui.MovieAppState
-import com.juanroig.composecourse.ui.screen.movieDetail.DetailRoute
 import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen
+import com.juanroig.composecourse.ui.screen.movieDetail.DetailRoute
 
 @Composable
 fun NavigationComponent(
@@ -88,7 +88,6 @@ fun dashboardNavHost(
         composable(
             route = Screen.DetailScreen.route
         ) {
-
             appState.topBarState.value = appState.topBarState.value.copy(
                 title = "Detalles",
                 showNavigationIcon = true,
@@ -98,8 +97,7 @@ fun dashboardNavHost(
                 }
             )
 
-            DetailRoute(
-            )
+            DetailRoute()
         }
     }
 }

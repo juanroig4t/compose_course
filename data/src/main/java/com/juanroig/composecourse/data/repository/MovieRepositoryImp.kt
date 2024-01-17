@@ -37,8 +37,8 @@ class MovieRepositoryImp @Inject constructor(
         }
     }
 
-    override suspend fun getMovieById(id: Int): Result<Movie> {
-        return Result.Success(movieDao.getMovieById(id).toDomain())
+    override fun getMovieById(id: Int): Flow<Result<Movie>> {
+        return movieDao.getMovieById(id).map { Result.Success(it.toDomain()) }
     }
 
     override suspend fun syncMovies(): Result<Unit> {

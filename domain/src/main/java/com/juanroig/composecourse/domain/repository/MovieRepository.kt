@@ -9,7 +9,7 @@ interface MovieRepository {
     suspend fun getTopTenMovies(): Flow<Result<List<Movie>>>
     fun getPopularMovies(): Flow<Result<List<Movie>>>
 
-    suspend fun getMovieById(id: Int): Result<Movie>
+    fun getMovieById(id: Int): Flow<Result<Movie>>
 
     suspend fun syncMovies(): Result<Unit>
 

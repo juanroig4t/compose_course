@@ -37,7 +37,7 @@ fun MovieApp(
                 appState.navController,
                 toggleDrawerMenu = {
                     scope.launch {
-                        if(drawerState.isClosed) {
+                        if (drawerState.isClosed) {
                             drawerState.open()
                         } else {
                             drawerState.close()

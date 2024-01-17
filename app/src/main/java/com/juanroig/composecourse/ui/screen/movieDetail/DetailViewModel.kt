@@ -11,14 +11,10 @@ import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
 import com.juanroig.composecourse.domain.usecase.AddMovieToFavoriteUseCase
 import com.juanroig.composecourse.domain.usecase.DeleteMovieToFavoriteUseCase
-import com.juanroig.composecourse.domain.usecase.ObtainTopTenMoviesUseCase
 import com.juanroig.composecourse.ui.navigation.NavArg
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,19 +32,18 @@ class DetailViewModel @Inject constructor(
     private val movieId = savedStateHandle.get<String>(NavArg.MovieIdArg.key) ?: "0"
 
     init {
-        viewModelScope.launch {
-            movieRepository.getMovieById(movieId.toInt()).apply {
-                state = when (this) {
-                    is Result.Error -> {
-                        state.copy(error = this.failure)
-                    }
 
-                    is Result.Success -> {
-                        state.copy(movie = this.data)
-                    }
+        movieRepository.getMovieById(movieId.toInt()).onEach { movieResult ->
+            state = when (movieResult) {
+                is Result.Error -> {
+                    state.copy(error = movieResult.failure)
+                }
+
+                is Result.Success -> {
+                    state.copy(movie = movieResult.data)
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     fun onFavoriteClick(movie: Movie) {

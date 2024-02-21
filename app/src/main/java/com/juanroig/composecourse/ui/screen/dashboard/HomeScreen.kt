@@ -1,5 +1,6 @@
 package com.juanroig.composecourse.ui.screen.dashboard
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
@@ -50,8 +52,8 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .fillMaxSize(),
+           // .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.Start
     ) {
         TopTenContent(state, goToDetail)
@@ -61,6 +63,7 @@ fun HomeScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun PopularMoviesContent(
     popularMovies: List<Movie>,
@@ -69,8 +72,26 @@ private fun PopularMoviesContent(
 ) {
     Text(text = "Populares", modifier = Modifier.padding(8.dp))
 
-    Column() {
-        popularMovies.forEachIndexed { index, movie ->
+    LazyColumn() {
+        stickyHeader {
+            Text(text = "1",
+                modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary))
+        }
+        itemsIndexed(popularMovies) { index, movie ->
+            PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
+        }
+        stickyHeader {
+            Text(text = "2",
+                modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary))
+        }
+        itemsIndexed(popularMovies) { index, movie ->
+            PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
+        }
+        stickyHeader {
+            Text(text = "3",
+                modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary))
+        }
+        itemsIndexed(popularMovies) { index, movie ->
             PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
         }
     }
@@ -173,7 +194,7 @@ private fun RowTopTenMovieItem(
         ),
         modifier = Modifier
             .padding(6.dp)
-            .size(width = 150.dp, height = 200.dp)
+            .size(width = 100.dp, height = 150.dp)
             .clickable {
                 goToDetailMovie(movie.id)
             }

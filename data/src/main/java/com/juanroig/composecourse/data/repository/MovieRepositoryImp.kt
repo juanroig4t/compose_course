@@ -33,6 +33,9 @@ class MovieRepositoryImp @Inject constructor(
 
     override fun getPopularMovies(): Flow<Result<List<Movie>>> {
         return movieDao.getPopularMovies().map {
+            if (it.isEmpty()) {
+                syncMovies()
+            }
             Result.Success(it.map { it.toDomain() })
         }
     }
@@ -57,5 +60,9 @@ class MovieRepositoryImp @Inject constructor(
 
     override suspend fun updateFavorite(movieId: Int, isFavorite: Boolean) {
         movieDao.updateFavorite(movieId, isFavorite)
+    }
+
+    override fun getMovieFavList(): Flow<List<Movie>> {
+        return movieDao.getMovieFavList().map { it.map { it.toDomain() } }
     }
 }

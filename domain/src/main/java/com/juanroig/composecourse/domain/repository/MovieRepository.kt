@@ -14,4 +14,5 @@ interface MovieRepository {
     suspend fun syncMovies(): Result<Unit>
 
     suspend fun updateFavorite(movieId: Int, isFavorite: Boolean)
+    fun getMovieFavList(): Flow<List<Movie>>
 }

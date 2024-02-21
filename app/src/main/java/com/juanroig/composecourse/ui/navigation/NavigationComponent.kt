@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.juanroig.composecourse.ui.MovieAppState
 import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen
+import com.juanroig.composecourse.ui.screen.favScreen.FavScreen
 import com.juanroig.composecourse.ui.screen.movieDetail.DetailRoute
 
 @Composable
@@ -46,7 +47,11 @@ fun NavigationComponent(
                     showDrawerMenu(true)
                 }
             )
-            Text(text = "Favorites Screen")
+            FavScreen(
+                goToDetailMovie = { movieId ->
+                    navController.navigate(Screen.DetailScreen.createRoute(movieId))
+                }
+            )
         }
         composable(Screen.SettingsScreen.route) {
             appState.topBarState.value = appState.topBarState.value.copy(

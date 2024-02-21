@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Compose Course"
 include(":app")
+include(":domain")
+include(":data")

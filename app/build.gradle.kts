@@ -1,16 +1,19 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt.gradle)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.juanroig.composecourse"
-    compileSdk = 34
+    compileSdk = rootProject.extra["compile"] as Int?
 
     defaultConfig {
         applicationId = "com.juanroig.composecourse"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = rootProject.extra["minSdk"] as Int?
+        targetSdk = rootProject.extra["target"] as Int?
         versionCode = 1
         versionName = "1.0"
 
@@ -35,9 +38,10 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
     packaging {
         resources {
@@ -48,6 +52,9 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
 
@@ -57,6 +64,10 @@ dependencies {
     implementation(libs.bundles.compose.bundle)
 
     implementation(libs.androidx.core.splashscreen)
+
+    // Hilt Dependency Injection
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

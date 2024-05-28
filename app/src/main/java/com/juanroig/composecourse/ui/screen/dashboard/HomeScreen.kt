@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -48,7 +46,9 @@ fun HomeScreen(
 ) {
     val state = viewModel.state
 
-    val popularMovies = viewModel.flowLifecycleState.collectAsStateWithLifecycle().value
+    val popularMovies = viewModel.flowLifecycleState.collectAsStateWithLifecycle(
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    ).value
 
     Column(
         modifier = Modifier

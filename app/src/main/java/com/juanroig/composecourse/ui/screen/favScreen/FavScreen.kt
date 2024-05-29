@@ -36,81 +36,12 @@ fun FavScreen(
 
     LazyColumn {
         items(viewModel.state.listFavMovies) {
-            FavItem(
-                movie = it,
-                goToDetailMovie = goToDetailMovie
+            Text(
+                text = it.title,
+                modifier = Modifier.padding(16.dp).clickable {
+                    goToDetailMovie(it.id)
+                                                             },
             )
         }
     }
  }
-
-@Composable
-fun FavItem(
-    movie: Movie,
-    goToDetailMovie: (movieId: Int) -> Unit
-    ) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
-        modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-            .clickable {
-                goToDetailMovie(movie.id)
-            }
-    ) {
-        Row(
-            modifier = Modifier
-        ) {
-            AsyncImage(
-                modifier = Modifier
-                    .weight(1f),
-                model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-                contentDescription = null
-            )
-            Column(
-                modifier = Modifier
-                    .weight(3f)
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = "${movie.title} (${movie.releaseDate.toYear()})",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = movie.overview,
-                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontSize = 20.sp
-                                )
-                            ) {
-                                append("Puntuación: ")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    color = movie.voteAverage.getColorByRating(),
-                                    fontSize = 20.sp
-                                )
-                            ) {
-                                append("%.2f".format(movie.voteAverage))
-                            }
-                        }
-                    )
-
-                    //FavIconButton(onFavoriteClick, movie)
-                }
-            }
-        }
-    }
-}

@@ -25,7 +25,21 @@ fun NavigationComponent(
         startDestination = Screen.HomeScreen.route
     ) {
         composable(Screen.HomeScreen.route) {
-            dashboardNavHost(appState, showDrawerMenu)
+            DashboardNavHost(appState, showDrawerMenu)
+        }
+        composable(
+            route = Screen.DetailScreen.route
+        ) {
+            appState.topBarState.value = appState.topBarState.value.copy(
+                title = "Detalles",
+                showNavigationIcon = true,
+                menuIcon = Icons.Default.ArrowBack,
+                onNavigationIconClick = {
+                    navController.popBackStack()
+                }
+            )
+
+            DetailRoute()
         }
         composable(Screen.SearchScreen.route) {
             appState.topBarState.value = appState.topBarState.value.copy(
@@ -68,7 +82,7 @@ fun NavigationComponent(
 }
 
 @Composable
-fun dashboardNavHost(
+fun DashboardNavHost(
     appState: MovieAppState,
     showDrawerMenu: (Boolean) -> Unit
 ) {

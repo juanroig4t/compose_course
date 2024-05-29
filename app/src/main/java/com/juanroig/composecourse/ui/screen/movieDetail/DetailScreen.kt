@@ -53,54 +53,17 @@ private fun DetailScreen(
     onFavoriteClick: (Movie) -> Unit
 ) {
     state.movie?.let { movie ->
-        Box(
+        AsyncImage(
             modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-        ) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                AsyncImage(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    model = "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
-                    contentDescription = "backdrop Path",
-                    contentScale = ContentScale.FillWidth
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp, end = 8.dp),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    FavIconButton(onFavoriteClick, movie, background = MaterialTheme.colorScheme.background.copy(alpha = 0.4f))
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                HeaderContent(movie)
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                        .clip(MaterialTheme.shapes.extraSmall)
-                        .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.4f)),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Sinopsis",
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
-
-                Text(text = movie.overview)
-            }
-        }
+                .fillMaxWidth(),
+            model = "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
+            contentDescription = "backdrop Path",
+            contentScale = ContentScale.FillWidth
+        )
+        Text(
+            text = movie.title,
+            style = MaterialTheme.typography.titleLarge
+        )
     }
 
     if (state.isLoading) {
@@ -110,74 +73,6 @@ private fun DetailScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "Cargando")
-        }
-    }
-
-    if (state.error != null) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = state.error.data.toString())
-        }
-    }
-}
-
-@Composable
-private fun ColumnScope.MoreInfoContent(movie: Movie) {
-    Row(
-        modifier = Modifier
-            .align(Alignment.End)
-            .background(
-                MaterialTheme.colorScheme.background.copy(alpha = 0.6f),
-                shape = MaterialTheme.shapes.extraSmall
-            ).padding(4.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        Icon(imageVector = Icons.Outlined.CalendarToday, contentDescription = "calendar icon")
-        Text(text = movie.releaseDate.toYear())
-        Spacer(modifier = Modifier.size(8.dp))
-        Text(text = "|")
-        Spacer(modifier = Modifier.size(8.dp))
-        Icon(imageVector = Icons.Outlined.StarBorder, contentDescription = "star icon")
-        Text(text = String.format("%.1f", movie.voteAverage))
-        Text(text = "|")
-        Spacer(modifier = Modifier.size(8.dp))
-        Icon(imageVector = Icons.Outlined.Flag, contentDescription = "flag icon")
-        Text(text = movie.originalLanguage)
-    }
-}
-
-@Composable
-private fun HeaderContent(movie: Movie) {
-    Spacer(modifier = Modifier.size(140.dp))
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.Bottom
-    ) {
-        Spacer(modifier = Modifier.size(4.dp))
-        AsyncImage(
-            modifier = Modifier
-                .size(100.dp, 150.dp)
-                .clip(MaterialTheme.shapes.medium),
-            model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-            contentDescription = "poster Path",
-            contentScale = ContentScale.Crop
-        )
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            MoreInfoContent(movie)
-            Text(
-                text = movie.title,
-                style = MaterialTheme.typography.titleLarge
-            )
         }
     }
 }

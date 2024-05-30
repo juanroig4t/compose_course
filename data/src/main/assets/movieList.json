@@ -1,0 +1,401 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/fqv8v6AycXKsivp1T5yKtLbGXce.jpg",
+      "genre_ids": [
+        878,
+        12,
+        28
+      ],
+      "id": 653346,
+      "original_language": "en",
+      "original_title": "Kingdom of the Planet of the Apes",
+      "overview": "Several generations in the future following Caesar's reign, apes are now the dominant species and live harmoniously while humans have been reduced to living in the shadows. As a new tyrannical ape leader builds his empire, one young ape undertakes a harrowing journey that will cause him to question all that he has known about the past and to make choices that will define a future for apes and humans alike.",
+      "popularity": 5081.145,
+      "poster_path": "/gKkl37BQuKTanygYQG1pyYgLVgf.jpg",
+      "release_date": "2024-05-08",
+      "title": "Kingdom of the Planet of the Apes",
+      "video": false,
+      "vote_average": 7.034,
+      "vote_count": 683
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/z121dSTR7PY9KxKuvwiIFSYW8cf.jpg",
+      "genre_ids": [
+        10752,
+        28,
+        18
+      ],
+      "id": 929590,
+      "original_language": "en",
+      "original_title": "Civil War",
+      "overview": "In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.",
+      "popularity": 3274.336,
+      "poster_path": "/sh7Rg8Er3tFcN9BpKIPOMvALgZd.jpg",
+      "release_date": "2024-04-10",
+      "title": "Civil War",
+      "video": false,
+      "vote_average": 7.202,
+      "vote_count": 1038
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/qrGtVFxaD8c7et0jUtaYhyTzzPg.jpg",
+      "genre_ids": [
+        878,
+        28,
+        12
+      ],
+      "id": 823464,
+      "original_language": "en",
+      "original_title": "Godzilla x Kong: The New Empire",
+      "overview": "Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own.",
+      "popularity": 2740.141,
+      "poster_path": "/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg",
+      "release_date": "2024-03-27",
+      "title": "Godzilla x Kong: The New Empire",
+      "video": false,
+      "vote_average": 7.242,
+      "vote_count": 2320
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/H5HjE7Xb9N09rbWn1zBfxgI8uz.jpg",
+      "genre_ids": [
+        28,
+        35
+      ],
+      "id": 746036,
+      "original_language": "en",
+      "original_title": "The Fall Guy",
+      "overview": "Fresh off an almost career-ending accident, stuntman Colt Seavers has to track down a missing movie star, solve a conspiracy and try to win back the love of his life while still doing his day job.",
+      "popularity": 1646.128,
+      "poster_path": "/tSz1qsmSJon0rqjHBxXZmrotuse.jpg",
+      "release_date": "2024-04-24",
+      "title": "The Fall Guy",
+      "video": false,
+      "vote_average": 7.317,
+      "vote_count": 844
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/3TNSoa0UHGEzEz5ndXGjJVKo8RJ.jpg",
+      "genre_ids": [
+        878,
+        28
+      ],
+      "id": 614933,
+      "original_language": "en",
+      "original_title": "Atlas",
+      "overview": "A brilliant counterterrorism analyst with a deep distrust of AI discovers it might be her only hope when a mission to capture a renegade robot goes awry.",
+      "popularity": 1148.399,
+      "poster_path": "/bcM2Tl5HlsvPBnL8DKP9Ie6vU4r.jpg",
+      "release_date": "2024-05-23",
+      "title": "Atlas",
+      "video": false,
+      "vote_average": 6.69,
+      "vote_count": 398
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/1m1rXopfNDVL3UMiv6kriYaJ3yE.jpg",
+      "genre_ids": [
+        28,
+        53,
+        80,
+        878
+      ],
+      "id": 882059,
+      "original_language": "en",
+      "original_title": "Boy Kills World",
+      "overview": "When his family is murdered, a deaf-mute named Boy escapes to the jungle and is trained by a mysterious shaman to repress his childish imagination and become an instrument of death.",
+      "popularity": 1114.141,
+      "poster_path": "/25JskXmchcYwj3jHRmcPm738MpB.jpg",
+      "release_date": "2024-04-24",
+      "title": "Boy Kills World",
+      "video": false,
+      "vote_average": 6.8,
+      "vote_count": 115
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/q8IEFmEGGSGmAWfwRs23XDwdFN4.jpg",
+      "genre_ids": [
+        28,
+        12,
+        878
+      ],
+      "id": 786892,
+      "original_language": "en",
+      "original_title": "Furiosa: A Mad Max Saga",
+      "overview": "As the world fell, young Furiosa is snatched from the Green Place of Many Mothers and falls into the hands of a great Biker Horde led by the Warlord Dementus. Sweeping through the Wasteland they come across the Citadel presided over by The Immortan Joe. While the two Tyrants war for dominance, Furiosa must survive many trials as she puts together the means to find her way home.",
+      "popularity": 1113.69,
+      "poster_path": "/iADOJ8Zymht2JPMoy3R7xceZprc.jpg",
+      "release_date": "2024-05-22",
+      "title": "Furiosa: A Mad Max Saga",
+      "video": false,
+      "vote_average": 7.69,
+      "vote_count": 459
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/iafs5DG5fGq7ef0acl3xlX4BFrs.jpg",
+      "genre_ids": [
+        18,
+        10770
+      ],
+      "id": 1219685,
+      "original_language": "fr",
+      "original_title": "Un père idéal",
+      "overview": "",
+      "popularity": 903.863,
+      "poster_path": "/4xJd3uwtL1vCuZgEfEc8JXI9Uyx.jpg",
+      "release_date": "2024-04-21",
+      "title": "Un père idéal",
+      "video": false,
+      "vote_average": 5.847,
+      "vote_count": 36
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
+      "genre_ids": [
+        878,
+        12
+      ],
+      "id": 693134,
+      "original_language": "en",
+      "original_title": "Dune: Part Two",
+      "overview": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
+      "popularity": 835.337,
+      "poster_path": "/czembW0Rk1Ke7lCJGahbOhdCuhV.jpg",
+      "release_date": "2024-02-27",
+      "title": "Dune: Part Two",
+      "video": false,
+      "vote_average": 8.172,
+      "vote_count": 4200
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/nb3xI8XI3w4pMVZ38VijbsyBqP4.jpg",
+      "genre_ids": [
+        18,
+        36
+      ],
+      "id": 872585,
+      "original_language": "en",
+      "original_title": "Oppenheimer",
+      "overview": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
+      "popularity": 629.301,
+      "poster_path": "/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+      "release_date": "2023-07-19",
+      "title": "Oppenheimer",
+      "video": false,
+      "vote_average": 8.098,
+      "vote_count": 8148
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/fY3lD0jM5AoHJMunjGWqJ0hRteI.jpg",
+      "genre_ids": [
+        878,
+        27,
+        28
+      ],
+      "id": 940721,
+      "original_language": "ja",
+      "original_title": "ゴジラ-1.0",
+      "overview": "Postwar Japan is at its lowest point when a new crisis emerges in the form of a giant monster, baptized in the horrific power of the atomic bomb.",
+      "popularity": 665.383,
+      "poster_path": "/hkxxMIGaiCTmrEArK7J56JTKUlB.jpg",
+      "release_date": "2023-11-03",
+      "title": "Godzilla Minus One",
+      "video": false,
+      "vote_average": 7.651,
+      "vote_count": 1196
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kYgQzzjNis5jJalYtIHgrom0gOx.jpg",
+      "genre_ids": [
+        16,
+        28,
+        10751,
+        35,
+        14
+      ],
+      "id": 1011985,
+      "original_language": "en",
+      "original_title": "Kung Fu Panda 4",
+      "overview": "Po is gearing up to become the spiritual leader of his Valley of Peace, but also needs someone to take his place as Dragon Warrior. As such, he will train a new kung fu practitioner for the spot and will encounter a villain called the Chameleon who conjures villains from the past.",
+      "popularity": 750.289,
+      "poster_path": "/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg",
+      "release_date": "2024-03-02",
+      "title": "Kung Fu Panda 4",
+      "video": false,
+      "vote_average": 7.1,
+      "vote_count": 1793
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/otfoeC96neoOdA4HqsX06OWuzE9.jpg",
+      "genre_ids": [
+        27,
+        53
+      ],
+      "id": 719221,
+      "original_language": "en",
+      "original_title": "Tarot",
+      "overview": "When a group of friends recklessly violates the sacred rule of Tarot readings they unknowingly unleash an unspeakable evil trapped within the cursed cards. One by one, they come face to face with fate and end up in a race against death.",
+      "popularity": 735.97,
+      "poster_path": "/gAEUXC37vl1SnM7PXsHTF23I2vq.jpg",
+      "release_date": "2024-05-01",
+      "title": "Tarot",
+      "video": false,
+      "vote_average": 5.6,
+      "vote_count": 92
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg",
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "id": 385687,
+      "original_language": "en",
+      "original_title": "Fast X",
+      "overview": "Over many missions and against impossible odds, Dom Toretto and his family have outsmarted, out-nerved and outdriven every foe in their path. Now, they confront the most lethal opponent they've ever faced: A terrifying threat emerging from the shadows of the past who's fueled by blood revenge, and who is determined to shatter this family and destroy everything—and everyone—that Dom loves, forever.",
+      "popularity": 641.082,
+      "poster_path": "/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
+      "release_date": "2023-05-17",
+      "title": "Fast X",
+      "video": false,
+      "vote_average": 7.121,
+      "vote_count": 5208
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/tkHQ7tnYYUEnqlrKuhufIsSVToU.jpg",
+      "genre_ids": [
+        27
+      ],
+      "id": 437342,
+      "original_language": "en",
+      "original_title": "The First Omen",
+      "overview": "When a young American woman is sent to Rome to begin a life of service to the church, she encounters a darkness that causes her to question her own faith and uncovers a terrifying conspiracy that hopes to bring about the birth of evil incarnate.",
+      "popularity": 703.836,
+      "poster_path": "/uGyiewQnDHPuiHN9V4k2t9QBPnh.jpg",
+      "release_date": "2024-04-03",
+      "title": "The First Omen",
+      "video": false,
+      "vote_average": 6.8,
+      "vote_count": 205
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/42rp8MkwOEFA62wwgKcuOpP8Fjb.jpg",
+      "genre_ids": [
+        28,
+        36,
+        18,
+        10752
+      ],
+      "id": 660360,
+      "original_language": "ko",
+      "original_title": "노량: 죽음의 바다",
+      "overview": "In the winter of 1598, the seven-year Imjin War nears an end as the Japanese Wae invaders prepare to withdraw from Joseon. Admiral Yi Sun-shin leads an allied fleet of Joseon and Ming ships to annihilate the Wae army. Joseon, Ming, and Wae forces clash at Noryang Strait, the deadly sea where Admiral Yi fights his last valiant battle.",
+      "popularity": 601.473,
+      "poster_path": "/wFAe7gA513Pi2meI4ECwf6YEKR1.jpg",
+      "release_date": "2023-12-20",
+      "title": "Noryang: Deadly Sea",
+      "video": false,
+      "vote_average": 7.1,
+      "vote_count": 25
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/lzWHmYdfeFiMIY4JaMmtR7GEli3.jpg",
+      "genre_ids": [
+        878,
+        12
+      ],
+      "id": 438631,
+      "original_language": "en",
+      "original_title": "Dune",
+      "overview": "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.",
+      "popularity": 523.415,
+      "poster_path": "/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
+      "release_date": "2021-09-15",
+      "title": "Dune",
+      "video": false,
+      "vote_average": 7.78,
+      "vote_count": 11758
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/ctMserH8g2SeOAnCw5gFjdQF8mo.jpg",
+      "genre_ids": [
+        35,
+        12
+      ],
+      "id": 346698,
+      "original_language": "en",
+      "original_title": "Barbie",
+      "overview": "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
+      "popularity": 539.162,
+      "poster_path": "/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+      "release_date": "2023-07-19",
+      "title": "Barbie",
+      "video": false,
+      "vote_average": 7.056,
+      "vote_count": 8340
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/vWzJDjLPmycnQ42IppEjMpIhrhc.jpg",
+      "genre_ids": [
+        16,
+        35,
+        10751
+      ],
+      "id": 748783,
+      "original_language": "en",
+      "original_title": "The Garfield Movie",
+      "overview": "Garfield, the world-famous, Monday-hating, lasagna-loving indoor cat, is about to have a wild outdoor adventure! After an unexpected reunion with his long-lost father – scruffy street cat Vic – Garfield and his canine friend Odie are forced from their perfectly pampered life into joining Vic in a hilarious, high-stakes heist.",
+      "popularity": 617.552,
+      "poster_path": "/p6AbOJvMQhBmffd0PIv0u8ghWeY.jpg",
+      "release_date": "2024-04-30",
+      "title": "The Garfield Movie",
+      "video": false,
+      "vote_average": 6.52,
+      "vote_count": 123
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/9X7YweCJw3q8Mcf6GadxReFEksM.jpg",
+      "genre_ids": [
+        28,
+        18,
+        878
+      ],
+      "id": 263115,
+      "original_language": "en",
+      "original_title": "Logan",
+      "overview": "In the near future, a weary Logan cares for an ailing Professor X in a hideout on the Mexican border. But Logan's attempts to hide from the world and his legacy are upended when a young mutant arrives, pursued by dark forces.",
+      "popularity": 462.077,
+      "poster_path": "/fnbjcRDYn6YviCcePDnGdyAkYsB.jpg",
+      "release_date": "2017-02-28",
+      "title": "Logan",
+      "video": false,
+      "vote_average": 7.818,
+      "vote_count": 18735
+    }
+  ],
+  "total_pages": 44419,
+  "total_results": 888376
+}

@@ -35,7 +35,7 @@ class MovieRemoteDatasourceImp(
 
 class FakeMovieRemoteDatasourceImp(
     private val retrofitMovieNetworkApi: RetrofitMovieNetworkApi,
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val context: Context
 ) : MovieRemoteDatasource {
 
     companion object {

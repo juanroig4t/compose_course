@@ -1,12 +1,12 @@
 package com.juanroig.composecourse.ui.screen.dashboard
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,13 +15,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,59 +42,54 @@ import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.ui.component.FavIconButton
 import com.juanroig.composecourse.ui.extension.getColorByRating
 import com.juanroig.composecourse.ui.extension.toYear
+import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEffect
+import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEvent
+import com.juanroig.composecourse.ui.screen.dashboard.model.HomeState
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     goToDetail: (movieId: Int) -> Unit
 ) {
-    val state = viewModel.state
-
+    val state by viewModel.uiState.collectAsState()
+    val scope = rememberCoroutineScope()
     val popularMovies = viewModel.flowLifecycleState.collectAsStateWithLifecycle().value
 
     Column(
         modifier = Modifier
             .fillMaxSize(),
-           // .verticalScroll(rememberScrollState()),
+        // .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.Start
     ) {
         TopTenContent(state, goToDetail)
         if (popularMovies is Result.Success) {
-            PopularMoviesContent(popularMovies.data, goToDetail, viewModel::onFavoriteClick)
+            PopularMoviesContent(popularMovies.data, goToDetail, viewModel::setEvent)
+        }
+    }
+
+    SideEffect {
+        scope.launch {
+            viewModel.effect.collect { effect ->
+                when (effect) {
+                    is HomeEffect.NavigateToDetail -> goToDetail(effect.movieId)
+                }
+            }
         }
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun PopularMoviesContent(
     popularMovies: List<Movie>,
     goToDetailMovie: (movieId: Int) -> Unit,
-    onFavoriteClick: (movie: Movie) -> Unit
+    setEvent: (HomeEvent) -> Unit
 ) {
     Text(text = "Populares", modifier = Modifier.padding(8.dp))
 
     LazyColumn() {
-        stickyHeader {
-            Text(text = "1",
-                modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary))
-        }
         itemsIndexed(popularMovies) { index, movie ->
-            PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
-        }
-        stickyHeader {
-            Text(text = "2",
-                modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary))
-        }
-        itemsIndexed(popularMovies) { index, movie ->
-            PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
-        }
-        stickyHeader {
-            Text(text = "3",
-                modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.primary))
-        }
-        itemsIndexed(popularMovies) { index, movie ->
-            PopularMovieItem(movie, goToDetailMovie, onFavoriteClick)
+            PopularMovieItem(movie, goToDetailMovie, setEvent)
         }
     }
 }
@@ -101,7 +98,7 @@ private fun PopularMoviesContent(
 private fun PopularMovieItem(
     movie: Movie,
     goToDetailMovie: (movieId: Int) -> Unit,
-    onFavoriteClick: (movie: Movie) -> Unit
+    setEvent: (HomeEvent) -> Unit
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -124,7 +121,7 @@ private fun PopularMovieItem(
             )
             Column(
                 modifier = Modifier
-                    .weight(3f)
+                    .weight(2f)
                     .padding(8.dp)
             ) {
                 Text(
@@ -137,6 +134,7 @@ private fun PopularMovieItem(
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
                 )
+                Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -162,7 +160,7 @@ private fun PopularMovieItem(
                         }
                     )
 
-                    FavIconButton(onFavoriteClick, movie)
+                    FavIconButton({ setEvent(HomeEvent.OnFavoriteClick(it)) }, movie)
                 }
             }
         }

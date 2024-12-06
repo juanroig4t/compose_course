@@ -1,5 +1,6 @@
-package com.juanroig.composecourse.ui.screen.dashboard
+package com.juanroig.composecourse.ui.screen.dashboard.model
 
+import com.juanroig.composecourse.common.UiState
 import com.juanroig.composecourse.domain.model.core.error.Failure
 import com.juanroig.composecourse.domain.model.movie.Movie
 
@@ -7,4 +8,4 @@ data class HomeState(
     val isLoading: Boolean = false,
     val topTenMovies: List<Movie> = emptyList(),
     val error: Failure? = null
-)
+) : UiState

@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.juanroig.composecourse.domain.model.movie.Movie
-import com.juanroig.composecourse.ui.component.FavIconButton
 import com.juanroig.composecourse.ui.extension.getColorByRating
 import com.juanroig.composecourse.ui.extension.toYear
 
@@ -32,8 +31,7 @@ import com.juanroig.composecourse.ui.extension.toYear
 fun FavScreen(
     viewModel: FavViewModel = hiltViewModel(),
     goToDetailMovie: (movieId: Int) -> Unit
-){
-
+) {
     LazyColumn {
         items(viewModel.state.listFavMovies) {
             FavItem(
@@ -42,13 +40,13 @@ fun FavScreen(
             )
         }
     }
- }
+}
 
 @Composable
 fun FavItem(
     movie: Movie,
     goToDetailMovie: (movieId: Int) -> Unit
-    ) {
+) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -108,7 +106,7 @@ fun FavItem(
                         }
                     )
 
-                    //FavIconButton(onFavoriteClick, movie)
+                    // FavIconButton(onFavoriteClick, movie)
                 }
             }
         }

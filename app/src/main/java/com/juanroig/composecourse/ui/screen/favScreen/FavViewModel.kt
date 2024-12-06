@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavViewModel @Inject constructor(
     val repository: MovieRepository
-): ViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(FavScreenState())
         private set
@@ -24,5 +24,4 @@ class FavViewModel @Inject constructor(
             state = state.copy(listFavMovies = it)
         }.launchIn(viewModelScope)
     }
-
 }

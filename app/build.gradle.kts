@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.com.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.gradle)
@@ -11,12 +10,12 @@ plugins {
 
 android {
     namespace = "com.juanroig.composecourse"
-    compileSdk = rootProject.extra["compile"] as Int?
+    compileSdk = property("android.compileSdk").toString().toInt()
 
     defaultConfig {
         applicationId = "com.juanroig.composecourse"
-        minSdk = rootProject.extra["minSdk"] as Int?
-        targetSdk = rootProject.extra["target"] as Int?
+        minSdk = property("android.minSdk").toString().toInt()
+        targetSdk = property("android.targetSdk").toString().toInt()
         versionCode = 1
         versionName = "1.0"
 

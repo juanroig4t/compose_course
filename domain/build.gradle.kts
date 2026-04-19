@@ -1,19 +1,17 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.gradle)
 }
 
 android {
     namespace = "com.juanroig.composecourse.domain"
-    compileSdk = rootProject.extra["compile"] as Int?
+    compileSdk = property("android.compileSdk").toString().toInt()
 
     defaultConfig {
-        minSdk = rootProject.extra["minSdk"] as Int?
+        minSdk = property("android.minSdk").toString().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

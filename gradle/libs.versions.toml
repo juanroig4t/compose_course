@@ -13,7 +13,7 @@ ksp = "2.3.6"
 # Splashscreen is used to show the splash screen
 splashscreen = "1.0.1"
 # Hilt is used for dependency injection
-hilt = "2.57.2"
+hilt = "2.59.2"
 androidxHilt = "1.3.0"
 # Retrofit and OkHttp are used to communicate with the network
 okhttp = "4.11.0"
@@ -92,7 +92,6 @@ androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "life
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
 android-library = { id = "com.android.library", version.ref = "com-android-application" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

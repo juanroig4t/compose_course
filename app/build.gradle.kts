@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.gradle)
     alias(libs.plugins.ksp)
 }
@@ -67,7 +66,7 @@ dependencies {
 
     // Hilt Dependency Injection
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

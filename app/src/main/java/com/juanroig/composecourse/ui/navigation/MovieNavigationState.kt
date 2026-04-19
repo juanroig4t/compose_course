@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 
 @Composable
@@ -14,7 +15,7 @@ fun rememberMovieNavigationState(
     startDestination: TopLevelScreen = defaultRoute
 ): MovieNavigationState {
     val backStacks = topLevelDestinations.associateWith { destination ->
-        rememberNavBackStack<Screen>(destination)
+        rememberNavBackStack(destination)
     }
 
     return remember(backStacks, startDestination) {
@@ -28,16 +29,16 @@ fun rememberMovieNavigationState(
 @Stable
 class MovieNavigationState(
     val startDestination: TopLevelScreen,
-    private val backStacks: Map<TopLevelScreen, NavBackStack<Screen>>
+    private val backStacks: Map<TopLevelScreen, NavBackStack<NavKey>>
 ) {
     var currentTopLevelDestination: TopLevelScreen by mutableStateOf(startDestination)
         private set
 
-    val currentBackStack: NavBackStack<Screen>
+    val currentBackStack: NavBackStack<NavKey>
         get() = backStacks.getValue(currentTopLevelDestination)
 
     val currentDestination: Screen
-        get() = currentBackStack.last()
+        get() = currentBackStack.last() as Screen
 
     fun navigateToTopLevel(destination: TopLevelScreen) {
         currentTopLevelDestination = destination

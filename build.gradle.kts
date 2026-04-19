@@ -7,7 +7,7 @@ ext {
     extra["compile"] = 36
     extra["target"] = 36
     extra["minSdk"] = 26
-    extra["build"] = "34.0.0"
+    extra["build"] = "36.0.0"
 }
 
 subprojects {

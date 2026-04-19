@@ -34,7 +34,7 @@ fun MovieApp(
         drawerState = drawerState,
         drawerContent = {
             MovieDrawer(
-                appState.navController,
+                appState = appState,
                 toggleDrawerMenu = {
                     scope.launch {
                         if (drawerState.isClosed) {
@@ -56,7 +56,7 @@ fun MovieApp(
             bottomBar = {
                 if (shouldShowBottomBar(windowSizeClass)) {
                     MovieBottomAppBar(
-                        appState.navController
+                        appState = appState
                     )
                 }
             }
@@ -68,7 +68,7 @@ fun MovieApp(
                     .padding(padding)
             ) {
                 if (!shouldShowBottomBar(windowSizeClass)) {
-                    MovieNavRail(appState.navController)
+                    MovieNavRail(appState = appState)
                 }
 
                 Column(
@@ -76,7 +76,6 @@ fun MovieApp(
                         .fillMaxSize()
                 ) {
                     NavigationComponent(
-                        navController = appState.navController,
                         appState = appState,
                         showDrawerMenu = {
                             scope.launch {

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.gradle)
     alias(libs.plugins.ksp)
@@ -59,6 +60,10 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
 
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose.bundle)

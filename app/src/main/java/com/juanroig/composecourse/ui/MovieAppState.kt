@@ -5,26 +5,49 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.juanroig.composecourse.ui.component.topBar.TopBarState
+import com.juanroig.composecourse.ui.navigation.MovieNavigationState
+import com.juanroig.composecourse.ui.navigation.Screen
+import com.juanroig.composecourse.ui.navigation.TopLevelScreen
+import com.juanroig.composecourse.ui.navigation.rememberMovieNavigationState
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun rememberMovieAppState(
-    navController: NavHostController = rememberNavController(),
+    navigationState: MovieNavigationState = rememberMovieNavigationState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     topBarState: MutableState<TopBarState> = remember { mutableStateOf(TopBarState()) }
-): MovieAppState = remember(navController) {
+): MovieAppState = remember(navigationState) {
     MovieAppState(
-        navController = navController,
+        navigationState = navigationState,
         coroutineScope = coroutineScope,
         topBarState = topBarState
     )
 }
 
 data class MovieAppState(
-    val navController: NavHostController,
+    val navigationState: MovieNavigationState,
     val coroutineScope: CoroutineScope,
     val topBarState: MutableState<TopBarState>
 )
+
+fun MovieAppState.navigateToTopLevel(destination: TopLevelScreen) {
+    navigationState.navigateToTopLevel(destination)
+}
+
+fun MovieAppState.navigateTo(destination: Screen) {
+    navigationState.navigateTo(destination)
+}
+
+fun MovieAppState.popBackStack(): Boolean {
+    return navigationState.popBackStack()
+}
+
+val MovieAppState.currentTopLevelDestination: TopLevelScreen
+    get() = navigationState.currentTopLevelDestination
+
+val MovieAppState.currentDestination: Screen
+    get() = navigationState.currentDestination
+
+val MovieAppState.currentBackStack
+    get() = navigationState.currentBackStack

@@ -1,5 +1,5 @@
 [versions]
-com-android-application = "8.2.0"
+com-android-application = "8.13.2"
 core-ktx = "1.12.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
@@ -8,13 +8,14 @@ lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.8.1"
 compose-bom = "2023.10.01"
 kotlin = "1.9.20"
+kotlinSerialization = "1.9.20"
 ksp = "1.9.20-1.0.14"
 androidxComposeCompiler = "1.5.4"
 # Splashscreen is used to show the splash screen
 splashscreen = "1.0.1"
 # Hilt is used for dependency injection
 hilt = "2.48.1"
-androidxHilt = "1.1.0"
+androidxHilt = "1.3.0"
 # Retrofit and OkHttp are used to communicate with the network
 okhttp = "4.11.0"
 retrofit = "2.9.0"
@@ -29,6 +30,8 @@ spotless = "6.13.0"
 coil = "2.4.0"
 # Navigation compose
 androidxNavigation = "2.7.5"
+nav3Core = "1.1.0"
+lifecycleViewmodelNavigation3 = "2.10.0"
 appcompat = "1.6.1"
 material = "1.10.0"
 
@@ -54,7 +57,7 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "dataStore" }
 dataStore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
 # Hilt is used to dependency injection
-androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt" }
+androidx-hilt-lifecycle-viewmodel-compose = { module = "androidx.hilt:hilt-lifecycle-viewmodel-compose", version.ref = "androidxHilt" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
@@ -77,6 +80,9 @@ androidx-compose-material-iconsExtended = { group = "androidx.compose.material",
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 # Navigation compose
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxNavigation" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNavigation3" }
 # Windows Size class
 androidx-compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -88,6 +94,7 @@ androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "life
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
 android-library = { id = "com.android.library", version.ref = "com-android-application" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -96,4 +103,4 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 [bundles]
 compose-bundle = ["ui", "ui-graphics", "ui-tooling", "material3", "activity-compose",
     "androidx-compose-material-iconsExtended", "coil-compose", "androidx-compose-material3-windowSizeClass",
-    "androidx-hilt-navigation-compose", "androidx-lifecycle-viewmodel-compose", "androidx-lifecycle-runtimeCompose"]
+    "androidx-hilt-lifecycle-viewmodel-compose", "androidx-lifecycle-viewmodel-compose", "androidx-lifecycle-runtimeCompose"]

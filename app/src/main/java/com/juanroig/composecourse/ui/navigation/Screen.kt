@@ -1,40 +1,45 @@
 package com.juanroig.composecourse.ui.navigation
 
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
+import androidx.navigation3.runtime.NavKey
+import java.io.Serializable
+import kotlinx.serialization.Serializable as KotlinSerializable
 
-sealed class Screen(val basicRoute: String, private val navArgs: List<NavArg> = emptyList()) {
-    object HomeScreen : Screen("home_screen")
-    object DetailScreen : Screen("detail_screen", listOf(NavArg.MovieIdArg)) {
-        fun createRoute(movieId: Int): String = "$basicRoute/$movieId"
-    }
-
-    object SearchScreen : Screen("search_screen")
-    object FavScreen : Screen("fav_screen")
-    object SettingsScreen : Screen("settings_screen")
-
-    object DetailOptionalArgumentScreen : Screen("detail_screen", listOf(NavArg.OptionalArg)) {
-        fun createRoute(optionalArg: String?): String = "$basicRoute?${NavArg.OptionalArg.key}=$optionalArg"
-    }
-
-    val route = run {
-        val argValues = navArgs.map { "{${it.key}}" }
-        listOf(basicRoute)
-            .plus(argValues)
-            .joinToString("/")
-    }
-
-    val args: List<NamedNavArgument>
-        get() = navArgs.map {
-            navArgument(it.key) { type = it.navType }
-        }
+sealed interface Screen : NavKey, Serializable {
+    val title: String
 }
 
-enum class NavArg(val key: String, val navType: NavType<*>) {
-    MovieIdArg("movieId", NavType.IntType),
-    OptionalArg("optionalString", NavType.IntType)
+sealed interface TopLevelScreen : Screen
+
+@KotlinSerializable
+data object HomeScreen : TopLevelScreen {
+    override val title: String = "Home"
 }
 
-val defaultRoute: String
-    get() = Screen.HomeScreen.route
+@KotlinSerializable
+data object SearchScreen : TopLevelScreen {
+    override val title: String = "Buscar"
+}
+
+@KotlinSerializable
+data object FavScreen : TopLevelScreen {
+    override val title: String = "Favoritos"
+}
+
+@KotlinSerializable
+data object SettingsScreen : TopLevelScreen {
+    override val title: String = "Settings"
+}
+
+@KotlinSerializable
+data class DetailScreen(val movieId: Int) : Screen {
+    override val title: String = "Detalles"
+}
+
+val defaultRoute: TopLevelScreen = HomeScreen
+
+val topLevelDestinations = listOf(
+    HomeScreen,
+    SearchScreen,
+    FavScreen,
+    SettingsScreen
+)

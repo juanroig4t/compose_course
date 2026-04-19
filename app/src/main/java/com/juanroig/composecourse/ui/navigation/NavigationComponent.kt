@@ -5,104 +5,91 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
 import com.juanroig.composecourse.ui.MovieAppState
-import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen
-import com.juanroig.composecourse.ui.screen.favScreen.FavScreen
-import com.juanroig.composecourse.ui.screen.movieDetail.DetailRoute
+import com.juanroig.composecourse.ui.navigateTo
+import com.juanroig.composecourse.ui.popBackStack
+import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen as HomeScreenContent
+import com.juanroig.composecourse.ui.screen.favScreen.FavScreen as FavScreenContent
+import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailRoute
+import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailViewModel
 
 @Composable
 fun NavigationComponent(
-    navController: NavHostController,
     appState: MovieAppState,
     showDrawerMenu: (Boolean) -> Unit
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.HomeScreen.route
-    ) {
-        composable(Screen.HomeScreen.route) {
-            dashboardNavHost(appState, showDrawerMenu)
+    NavDisplay(
+        backStack = appState.navigationState.currentBackStack,
+        onBack = { appState.popBackStack() },
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator()
+        ),
+        entryProvider = entryProvider {
+            entry<HomeScreen> {
+                appState.topBarState.value = appState.topBarState.value.copy(
+                    title = HomeScreen.title,
+                    showNavigationIcon = true,
+                    menuIcon = Icons.Default.Menu,
+                    onNavigationIconClick = { showDrawerMenu(true) }
+                )
+                HomeScreenContent(
+                    goToDetail = { movieId ->
+                        appState.navigateTo(DetailScreen(movieId))
+                    }
+                )
+            }
+            entry<SearchScreen> {
+                appState.topBarState.value = appState.topBarState.value.copy(
+                    title = SearchScreen.title,
+                    showNavigationIcon = true,
+                    menuIcon = Icons.Default.Menu,
+                    onNavigationIconClick = { showDrawerMenu(true) }
+                )
+                Text(text = "Search Screen")
+            }
+            entry<FavScreen> {
+                appState.topBarState.value = appState.topBarState.value.copy(
+                    title = FavScreen.title,
+                    showNavigationIcon = true,
+                    menuIcon = Icons.Default.Menu,
+                    onNavigationIconClick = { showDrawerMenu(true) }
+                )
+                FavScreenContent(
+                    goToDetailMovie = { movieId ->
+                        appState.navigateTo(DetailScreen(movieId))
+                    }
+                )
+            }
+            entry<SettingsScreen> {
+                appState.topBarState.value = appState.topBarState.value.copy(
+                    title = SettingsScreen.title,
+                    showNavigationIcon = true,
+                    menuIcon = Icons.Default.Menu,
+                    onNavigationIconClick = { showDrawerMenu(true) }
+                )
+                Text(text = "Settings Screen")
+            }
+            entry<DetailScreen> { key ->
+                appState.topBarState.value = appState.topBarState.value.copy(
+                    title = key.title,
+                    showNavigationIcon = true,
+                    menuIcon = Icons.Default.ArrowBack,
+                    onNavigationIconClick = { appState.popBackStack() }
+                )
+                MovieDetailRoute(
+                    viewModel = hiltViewModel<MovieDetailViewModel, MovieDetailViewModel.Factory>(
+                        creationCallback = { factory ->
+                            factory.create(key)
+                        }
+                    )
+                )
+            }
         }
-        composable(Screen.SearchScreen.route) {
-            appState.topBarState.value = appState.topBarState.value.copy(
-                title = "Buscar",
-                showNavigationIcon = true,
-                menuIcon = Icons.Default.Menu,
-                onNavigationIconClick = {
-                    showDrawerMenu(true)
-                }
-            )
-            Text(text = "Search Screen")
-        }
-        composable(Screen.FavScreen.route) {
-            appState.topBarState.value = appState.topBarState.value.copy(
-                title = "Favoritos",
-                showNavigationIcon = true,
-                menuIcon = Icons.Default.Menu,
-                onNavigationIconClick = {
-                    showDrawerMenu(true)
-                }
-            )
-            FavScreen(
-                goToDetailMovie = { movieId ->
-                    navController.navigate(Screen.DetailScreen.createRoute(movieId))
-                }
-            )
-        }
-        composable(Screen.SettingsScreen.route) {
-            appState.topBarState.value = appState.topBarState.value.copy(
-                title = "Settings",
-                showNavigationIcon = true,
-                menuIcon = Icons.Default.Menu,
-                onNavigationIconClick = {
-                    showDrawerMenu(true)
-                }
-            )
-            Text(text = "Settings Screen")
-        }
-    }
-}
-
-@Composable
-fun dashboardNavHost(
-    appState: MovieAppState,
-    showDrawerMenu: (Boolean) -> Unit
-) {
-    val dashboardController = rememberNavController()
-
-    NavHost(navController = dashboardController, startDestination = Screen.HomeScreen.route) {
-        composable(route = Screen.HomeScreen.route) {
-            appState.topBarState.value = appState.topBarState.value.copy(
-                title = "Home",
-                showNavigationIcon = true,
-                menuIcon = Icons.Default.Menu,
-                onNavigationIconClick = {
-                    showDrawerMenu(true)
-                }
-            )
-            HomeScreen(
-                goToDetail = { movieId ->
-                    dashboardController.navigate(Screen.DetailScreen.createRoute(movieId))
-                }
-            )
-        }
-        composable(
-            route = Screen.DetailScreen.route
-        ) {
-            appState.topBarState.value = appState.topBarState.value.copy(
-                title = "Detalles",
-                showNavigationIcon = true,
-                menuIcon = Icons.Default.ArrowBack,
-                onNavigationIconClick = {
-                    dashboardController.popBackStack()
-                }
-            )
-
-            DetailRoute()
-        }
-    }
+    )
 }

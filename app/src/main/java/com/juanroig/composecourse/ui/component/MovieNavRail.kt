@@ -23,48 +23,47 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.juanroig.composecourse.ui.navigation.Screen
+import com.juanroig.composecourse.ui.MovieAppState
+import com.juanroig.composecourse.ui.currentTopLevelDestination
+import com.juanroig.composecourse.ui.navigateToTopLevel
+import com.juanroig.composecourse.ui.navigation.FavScreen
+import com.juanroig.composecourse.ui.navigation.HomeScreen
+import com.juanroig.composecourse.ui.navigation.SearchScreen
+import com.juanroig.composecourse.ui.navigation.SettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieNavRail(
-    navController: NavController
+    appState: MovieAppState
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-
     val items = listOf(
         BottomNavigationItem(
             title = "Inicio",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
-            route = Screen.HomeScreen.route
+            destination = HomeScreen
         ),
         BottomNavigationItem(
             title = "Buscar",
             selectedIcon = Icons.Filled.Search,
             unselectedIcon = Icons.Outlined.Search,
-            route = Screen.SearchScreen.route
+            destination = SearchScreen
         ),
         BottomNavigationItem(
             title = "Favoritos",
             selectedIcon = Icons.Filled.Favorite,
             unselectedIcon = Icons.Outlined.Favorite,
-            route = Screen.FavScreen.route
+            destination = FavScreen
         ),
         BottomNavigationItem(
             title = "Ajustes",
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
             badgedCount = 10,
-            route = Screen.SettingsScreen.route
+            destination = SettingsScreen
         )
     )
 
@@ -76,18 +75,12 @@ fun MovieNavRail(
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Bottom)
         ) {
-            items.forEachIndexed() { index, item ->
-                val isSelected = item.route == navBackStackEntry?.destination?.route
+            items.forEachIndexed() { _, item ->
+                val isSelected = item.destination == appState.currentTopLevelDestination
                 NavigationRailItem(
                     selected = isSelected,
                     onClick = {
-                        navController.navigate(item.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        appState.navigateToTopLevel(item.destination)
                     },
                     label = { Text(text = item.title) },
                     icon = {

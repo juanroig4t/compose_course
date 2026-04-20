@@ -14,10 +14,10 @@ import androidx.navigation3.ui.NavDisplay
 import com.juanroig.composecourse.ui.MovieAppState
 import com.juanroig.composecourse.ui.navigateTo
 import com.juanroig.composecourse.ui.popBackStack
-import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen as HomeScreenContent
-import com.juanroig.composecourse.ui.screen.favScreen.FavScreen as FavScreenContent
 import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailRoute
 import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailViewModel
+import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen as HomeScreenContent
+import com.juanroig.composecourse.ui.screen.favScreen.FavScreen as FavScreenContent
 
 @Composable
 fun NavigationComponent(

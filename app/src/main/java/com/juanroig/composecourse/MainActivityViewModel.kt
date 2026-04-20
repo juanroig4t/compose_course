@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    @AppID private val appId: String,
-    @AppVersionName private val appVersionName: String
+    @param:AppID private val appId: String,
+    @param:AppVersionName private val appVersionName: String
 ) : ViewModel() {
 
     var showSplashScreen by mutableStateOf(true)

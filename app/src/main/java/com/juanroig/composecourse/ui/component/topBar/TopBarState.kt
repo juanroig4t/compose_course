@@ -2,7 +2,7 @@ package com.juanroig.composecourse.ui.component.topBar
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
@@ -29,6 +29,6 @@ data class TopBarState(
             )
         }
     },
-    var menuIcon: ImageVector = Icons.Filled.ArrowBack,
+    var menuIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
     var onNavigationIconClick: (() -> Unit) = {}
 )

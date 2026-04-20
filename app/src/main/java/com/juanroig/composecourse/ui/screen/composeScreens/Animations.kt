@@ -3,8 +3,6 @@ package com.juanroig.composecourse.ui.screen.composeScreens
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -51,7 +49,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -86,16 +84,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import coil.compose.AsyncImage
 import com.juanroig.composecourse.R
 import kotlinx.coroutines.launch
-import java.net.URLDecoder
-import java.net.URLEncoder
 import kotlin.math.roundToInt
 
 @Preview
@@ -797,27 +788,12 @@ fun AnimationLayoutIndividualItem() {
 @Preview
 @Composable
 fun AnimateBetweenComposableDestinations() {
-    // [START android_compose_animate_destinations]
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = "landing",
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None }
-    ) {
-        composable("landing") {
-            ScreenLanding(
-                // [START_EXCLUDE]
-                onItemClicked = {
-                    navController.navigate("detail/${URLEncoder.encode(it)}")
-                }
-                // [END_EXCLUDE]
-            )
-        }
-        composable(
-            "detail/{photoUrl}",
-            arguments = listOf(navArgument("photoUrl") { type = NavType.StringType }),
-            enterTransition = {
+    var selectedPhoto by remember { mutableStateOf<String?>(null) }
+
+    AnimatedContent(
+        targetState = selectedPhoto,
+        transitionSpec = {
+            if (targetState != null) {
                 fadeIn(
                     animationSpec = tween(
                         300,
@@ -826,10 +802,25 @@ fun AnimateBetweenComposableDestinations() {
                 ) + slideIntoContainer(
                     animationSpec = tween(300, easing = EaseIn),
                     towards = AnimatedContentTransitionScope.SlideDirection.Start
+                ) togetherWith fadeOut(
+                    animationSpec = tween(
+                        300,
+                        easing = LinearEasing
+                    )
+                ) + slideOutOfContainer(
+                    animationSpec = tween(300, easing = EaseOut),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Start
                 )
-            },
-            exitTransition = {
-                fadeOut(
+            } else {
+                fadeIn(
+                    animationSpec = tween(
+                        300,
+                        easing = LinearEasing
+                    )
+                ) + slideIntoContainer(
+                    animationSpec = tween(300, easing = EaseIn),
+                    towards = AnimatedContentTransitionScope.SlideDirection.End
+                ) togetherWith fadeOut(
                     animationSpec = tween(
                         300,
                         easing = LinearEasing
@@ -839,18 +830,18 @@ fun AnimateBetweenComposableDestinations() {
                     towards = AnimatedContentTransitionScope.SlideDirection.End
                 )
             }
-        ) { backStackEntry ->
+        },
+        label = "animated_destinations"
+    ) { photo ->
+        if (photo == null) {
+            ScreenLanding(onItemClicked = { selectedPhoto = it })
+        } else {
             ScreenDetails(
-                // [START_EXCLUDE]
-                photo = URLDecoder.decode(backStackEntry.arguments!!.getString("photoUrl")!!),
-                onBackClicked = {
-                    navController.popBackStack()
-                }
-                // [END_EXCLUDE]
+                photo = photo,
+                onBackClicked = { selectedPhoto = null }
             )
         }
     }
-    // [END android_compose_animate_destinations]
 }
 
 @Composable
@@ -889,7 +880,7 @@ private fun ScreenDetails(photo: String, onBackClicked: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = { onBackClicked() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )

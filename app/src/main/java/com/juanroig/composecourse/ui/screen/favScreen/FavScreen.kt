@@ -3,6 +3,7 @@ package com.juanroig.composecourse.ui.screen.favScreen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,10 +31,13 @@ import com.juanroig.composecourse.ui.extension.toYear
 @Composable
 fun FavScreen(
     viewModel: FavViewModel = hiltViewModel(),
+    contentPadding: PaddingValues,
     goToDetailMovie: (movieId: Int) -> Unit
 ) {
-    LazyColumn {
-        items(viewModel.state.listFavMovies) {
+    LazyColumn(
+        contentPadding = contentPadding
+    ) {
+        items(viewModel.state.listFavMovies, key = { movie -> movie.id }) {
             FavItem(
                 movie = it,
                 goToDetailMovie = goToDetailMovie

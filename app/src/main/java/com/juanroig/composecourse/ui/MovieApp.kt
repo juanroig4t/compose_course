@@ -1,6 +1,8 @@
 package com.juanroig.composecourse.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -63,9 +65,10 @@ fun MovieApp(
         ) { padding ->
 
             Row(
-                Modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
+                    .consumeWindowInsets(padding)
             ) {
                 if (!shouldShowBottomBar(windowSizeClass)) {
                     MovieNavRail(appState = appState)
@@ -73,10 +76,12 @@ fun MovieApp(
 
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxHeight()
+                        .weight(1f)
                 ) {
                     NavigationComponent(
                         appState = appState,
+                        innerPadding = padding,
                         showDrawerMenu = {
                             scope.launch {
                                 drawerState.open()

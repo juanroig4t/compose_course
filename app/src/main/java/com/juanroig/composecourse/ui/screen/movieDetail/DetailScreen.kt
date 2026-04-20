@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -39,28 +41,35 @@ import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
 
 @Composable
 fun MovieDetailRoute(
+    contentPadding: PaddingValues,
     viewModel: MovieDetailViewModel
 ) {
     val state = viewModel.state
 
-    DetailScreen(state, viewModel::onFavoriteClick)
+    DetailScreen(
+        state = state,
+        contentPadding = contentPadding,
+        onFavoriteClick = viewModel::onFavoriteClick
+    )
 }
 
 @Composable
 private fun DetailScreen(
     state: DetailState,
+    contentPadding: PaddingValues,
     onFavoriteClick: (Movie) -> Unit
 ) {
     state.movie?.let { movie ->
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
+                .padding(contentPadding)
+                .consumeWindowInsets(contentPadding)
                 .verticalScroll(rememberScrollState())
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 AsyncImage(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     model = "https://image.tmdb.org/t/p/w500${movie.backdropPath}",
                     contentDescription = "backdrop Path",
                     contentScale = ContentScale.FillWidth
@@ -71,7 +80,11 @@ private fun DetailScreen(
                         .padding(top = 8.dp, end = 8.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    FavIconButton(onFavoriteClick, movie, background = MaterialTheme.colorScheme.background.copy(alpha = 0.4f))
+                    FavIconButton(
+                        onFavoriteClick,
+                        movie,
+                        background = MaterialTheme.colorScheme.background.copy(alpha = 0.4f)
+                    )
                 }
             }
             Column(
@@ -104,8 +117,7 @@ private fun DetailScreen(
 
     if (state.isLoading) {
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "Cargando")
@@ -114,8 +126,7 @@ private fun DetailScreen(
 
     if (state.error != null) {
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = state.error.data.toString())
@@ -131,7 +142,8 @@ private fun ColumnScope.MoreInfoContent(movie: Movie) {
             .background(
                 MaterialTheme.colorScheme.background.copy(alpha = 0.6f),
                 shape = MaterialTheme.shapes.extraSmall
-            ).padding(4.dp),
+            )
+            .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
@@ -153,8 +165,7 @@ private fun ColumnScope.MoreInfoContent(movie: Movie) {
 private fun HeaderContent(movie: Movie) {
     Spacer(modifier = Modifier.size(140.dp))
     Row(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.Bottom
     ) {
         Spacer(modifier = Modifier.size(4.dp))
@@ -215,8 +226,9 @@ fun DetailScreenPreview() {
 
     ComposeCourseTheme {
         DetailScreen(
-            state,
-            {
+            state = state,
+            contentPadding = PaddingValues(),
+            onFavoriteClick = {
                 movie = movie.copy(isFavorite = !movie.isFavorite)
             }
         )

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,16 +15,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,51 +45,51 @@ import com.juanroig.composecourse.ui.extension.toYear
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEffect
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEvent
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeState
-import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    contentPadding: PaddingValues,
     goToDetail: (movieId: Int) -> Unit
 ) {
-    val state by viewModel.uiState.collectAsState()
-    val scope = rememberCoroutineScope()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
     val popularMovies = viewModel.flowLifecycleState.collectAsStateWithLifecycle().value
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        // .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.Start
-    ) {
-        TopTenContent(state, goToDetail)
-        if (popularMovies is Result.Success) {
-            PopularMoviesContent(popularMovies.data, goToDetail, viewModel::setEvent)
-        }
-    }
-
-    SideEffect {
-        scope.launch {
-            viewModel.effect.collect { effect ->
-                when (effect) {
-                    is HomeEffect.NavigateToDetail -> goToDetail(effect.movieId)
-                }
+    LaunchedEffect(viewModel) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                is HomeEffect.NavigateToDetail -> goToDetail(effect.movieId)
             }
         }
     }
-}
 
-@Composable
-private fun PopularMoviesContent(
-    popularMovies: List<Movie>,
-    goToDetailMovie: (movieId: Int) -> Unit,
-    setEvent: (HomeEvent) -> Unit
-) {
-    Text(text = "Populares", modifier = Modifier.padding(8.dp))
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = contentPadding,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        item {
+            TopTenContent(state, goToDetail)
+        }
 
-    LazyColumn() {
-        itemsIndexed(popularMovies) { index, movie ->
-            PopularMovieItem(movie, goToDetailMovie, setEvent)
+        item {
+            Text(
+                text = "Populares",
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        }
+
+        if (popularMovies is Result.Success) {
+            items(popularMovies.data, key = { movie -> movie.id }) { movie ->
+                PopularMovieItem(movie, goToDetail, viewModel::setEvent)
+            }
+        } else {
+            item {
+                Text(
+                    text = "No hay peliculas disponibles.",
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+            }
         }
     }
 }
@@ -110,12 +110,9 @@ private fun PopularMovieItem(
                 goToDetailMovie(movie.id)
             }
     ) {
-        Row(
-            modifier = Modifier
-        ) {
+        Row {
             AsyncImage(
-                modifier = Modifier
-                    .weight(1f),
+                modifier = Modifier.weight(1f),
                 model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
                 contentDescription = null
             )
@@ -147,7 +144,7 @@ private fun PopularMovieItem(
                                     fontSize = 20.sp
                                 )
                             ) {
-                                append("Puntuación: ")
+                                append("Puntuacion: ")
                             }
                             withStyle(
                                 style = SpanStyle(
@@ -172,8 +169,8 @@ private fun TopTenContent(
     state: HomeState,
     goToDetailMovie: (movieId: Int) -> Unit
 ) {
-    Text(text = "Top 10", modifier = Modifier.padding(8.dp))
-    LazyRow() {
+    Text(text = "Top 10", modifier = Modifier.padding(horizontal = 8.dp))
+    LazyRow {
         itemsIndexed(state.topTenMovies) { index, movie ->
             RowTopTenMovieItem(movie, index + 1, goToDetailMovie)
         }
@@ -198,8 +195,7 @@ private fun RowTopTenMovieItem(
             }
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),

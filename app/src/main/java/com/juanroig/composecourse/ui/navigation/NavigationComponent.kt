@@ -1,7 +1,8 @@
 package com.juanroig.composecourse.ui.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailViewModel
 @Composable
 fun NavigationComponent(
     appState: MovieAppState,
+    innerPadding: PaddingValues,
     showDrawerMenu: (Boolean) -> Unit
 ) {
     NavDisplay(
@@ -39,6 +41,7 @@ fun NavigationComponent(
                     onNavigationIconClick = { showDrawerMenu(true) }
                 )
                 HomeScreenContent(
+                    contentPadding = innerPadding,
                     goToDetail = { movieId ->
                         appState.navigateTo(DetailScreen(movieId))
                     }
@@ -61,6 +64,7 @@ fun NavigationComponent(
                     onNavigationIconClick = { showDrawerMenu(true) }
                 )
                 FavScreenContent(
+                    contentPadding = innerPadding,
                     goToDetailMovie = { movieId ->
                         appState.navigateTo(DetailScreen(movieId))
                     }
@@ -79,10 +83,11 @@ fun NavigationComponent(
                 appState.topBarState.value = appState.topBarState.value.copy(
                     title = key.title,
                     showNavigationIcon = true,
-                    menuIcon = Icons.Default.ArrowBack,
+                    menuIcon = Icons.AutoMirrored.Filled.ArrowBack,
                     onNavigationIconClick = { appState.popBackStack() }
                 )
                 MovieDetailRoute(
+                    contentPadding = innerPadding,
                     viewModel = hiltViewModel<MovieDetailViewModel, MovieDetailViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)

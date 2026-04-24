@@ -1,12 +1,9 @@
 package com.juanroig.composecourse.ui.navigation
 
 import androidx.navigation3.runtime.NavKey
-import java.io.Serializable
 import kotlinx.serialization.Serializable as KotlinSerializable
 
-sealed interface Screen :
-    NavKey,
-    Serializable {
+sealed interface Screen : NavKey {
     val title: String
 }
 
@@ -14,7 +11,7 @@ sealed interface TopLevelScreen : Screen
 
 @KotlinSerializable
 data object HomeScreen : TopLevelScreen {
-    override val title: String = "Home"
+    override val title: String = "Inicio"
 }
 
 @KotlinSerializable
@@ -29,7 +26,7 @@ data object FavScreen : TopLevelScreen {
 
 @KotlinSerializable
 data object SettingsScreen : TopLevelScreen {
-    override val title: String = "Settings"
+    override val title: String = "Ajustes"
 }
 
 @KotlinSerializable

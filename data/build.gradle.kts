@@ -10,6 +10,11 @@ plugins {
 val localProperties = Properties()
 localProperties.load(project.rootProject.file("local.properties").inputStream())
 
+fun resolvedProperty(name: String): String {
+    return providers.gradleProperty(name).orNull
+        ?: localProperties.getProperty(name, "")
+}
+
 android {
     namespace = "com.juanroig.composecourse.data"
     compileSdk = property("android.compileSdk").toString().toInt()
@@ -19,10 +24,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        ksp {
-            arg("room.schemaLocation", "$projectDir/schemas")
-        }
     }
 
     buildFeatures {
@@ -37,18 +38,22 @@ android {
                 "proguard-rules.pro"
             )
 
-            buildConfigField("String", "URL_BASE", "\"${localProperties.getProperty("url_base")}\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("api_key")}\"")
+            buildConfigField("String", "URL_BASE", "\"${resolvedProperty("url_base")}\"")
+            buildConfigField("String", "API_KEY", "\"${resolvedProperty("api_key")}\"")
         }
         debug {
-            buildConfigField("String", "URL_BASE", "\"${localProperties.getProperty("url_base")}\"")
-            buildConfigField("String", "API_KEY", "\"${localProperties.getProperty("api_key")}\"")
+            buildConfigField("String", "URL_BASE", "\"${resolvedProperty("url_base")}\"")
+            buildConfigField("String", "API_KEY", "\"${resolvedProperty("api_key")}\"")
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 kotlin {

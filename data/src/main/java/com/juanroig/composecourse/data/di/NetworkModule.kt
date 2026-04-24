@@ -1,15 +1,13 @@
 package com.juanroig.composecourse.data.di
 
-import android.content.Context
 import com.juanroig.composecourse.data.BuildConfig
 import com.juanroig.composecourse.data.datasource.MovieRemoteDatasource
-import com.juanroig.composecourse.data.datasource.remote.FakeMovieRemoteDatasourceImp
+import com.juanroig.composecourse.data.datasource.remote.MovieRemoteDatasourceImp
 import com.juanroig.composecourse.data.datasource.remote.RetrofitMovieNetworkApi
 import com.juanroig.composecourse.data.datasource.remote.util.BasicAuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -27,10 +25,9 @@ internal object NetworkModule {
     @Provides
     @Singleton
     fun provideRemoteDataSource(
-        retrofitMovieNetworkApi: RetrofitMovieNetworkApi,
-        @ApplicationContext context: Context
+        retrofitMovieNetworkApi: RetrofitMovieNetworkApi
     ): MovieRemoteDatasource {
-        return FakeMovieRemoteDatasourceImp(retrofitMovieNetworkApi, context)
+        return MovieRemoteDatasourceImp(retrofitMovieNetworkApi)
     }
 
     @Provides

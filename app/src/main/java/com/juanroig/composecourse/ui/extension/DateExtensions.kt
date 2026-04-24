@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter
 const val SIMPLE_REQUEST_DATE_FORMAT = "dd/MM/yyyy"
 const val SIMPLE_DATE_FORMAT = "yyyy-MM-dd"
 
-fun String.toSimpleDateFormat(): ZonedDateTime? {
-    return try {
+fun String.toSimpleDateFormat(): ZonedDateTime? =
+    try {
         // Crear un formateador para el formato "yyyy-MM-dd"
         val formatter = DateTimeFormatter.ofPattern(SIMPLE_DATE_FORMAT)
 
@@ -24,7 +24,6 @@ fun String.toSimpleDateFormat(): ZonedDateTime? {
     } catch (e: Exception) {
         null
     }
-}
 
 fun String.toYear(): String {
     val date = this.toSimpleDateFormat()

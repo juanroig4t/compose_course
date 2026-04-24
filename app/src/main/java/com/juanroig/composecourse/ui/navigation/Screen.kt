@@ -4,7 +4,9 @@ import androidx.navigation3.runtime.NavKey
 import java.io.Serializable
 import kotlinx.serialization.Serializable as KotlinSerializable
 
-sealed interface Screen : NavKey, Serializable {
+sealed interface Screen :
+    NavKey,
+    Serializable {
     val title: String
 }
 
@@ -31,15 +33,18 @@ data object SettingsScreen : TopLevelScreen {
 }
 
 @KotlinSerializable
-data class DetailScreen(val movieId: Int) : Screen {
+data class DetailScreen(
+    val movieId: Int
+) : Screen {
     override val title: String = "Detalles"
 }
 
 val defaultRoute: TopLevelScreen = HomeScreen
 
-val topLevelDestinations = listOf(
-    HomeScreen,
-    SearchScreen,
-    FavScreen,
-    SettingsScreen
-)
+val topLevelDestinations =
+    listOf(
+        HomeScreen,
+        SearchScreen,
+        FavScreen,
+        SettingsScreen
+    )

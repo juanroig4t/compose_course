@@ -11,12 +11,11 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
 
 @Composable
-fun rememberMovieNavigationState(
-    startDestination: TopLevelScreen = defaultRoute
-): MovieNavigationState {
-    val backStacks = topLevelDestinations.associateWith { destination ->
-        rememberNavBackStack(destination)
-    }
+fun rememberMovieNavigationState(startDestination: TopLevelScreen = defaultRoute): MovieNavigationState {
+    val backStacks =
+        topLevelDestinations.associateWith { destination ->
+            rememberNavBackStack(destination)
+        }
 
     return remember(backStacks, startDestination) {
         MovieNavigationState(
@@ -48,8 +47,8 @@ class MovieNavigationState(
         currentBackStack.add(destination)
     }
 
-    fun popBackStack(): Boolean {
-        return if (currentBackStack.size > 1) {
+    fun popBackStack(): Boolean =
+        if (currentBackStack.size > 1) {
             currentBackStack.removeLast()
             true
         } else if (currentTopLevelDestination != startDestination) {
@@ -58,5 +57,4 @@ class MovieNavigationState(
         } else {
             false
         }
-    }
 }

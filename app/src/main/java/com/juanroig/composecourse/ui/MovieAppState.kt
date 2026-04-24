@@ -17,13 +17,14 @@ fun rememberMovieAppState(
     navigationState: MovieNavigationState = rememberMovieNavigationState(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     topBarState: MutableState<TopBarState> = remember { mutableStateOf(TopBarState()) }
-): MovieAppState = remember(navigationState) {
-    MovieAppState(
-        navigationState = navigationState,
-        coroutineScope = coroutineScope,
-        topBarState = topBarState
-    )
-}
+): MovieAppState =
+    remember(navigationState) {
+        MovieAppState(
+            navigationState = navigationState,
+            coroutineScope = coroutineScope,
+            topBarState = topBarState
+        )
+    }
 
 data class MovieAppState(
     val navigationState: MovieNavigationState,
@@ -39,9 +40,7 @@ fun MovieAppState.navigateTo(destination: Screen) {
     navigationState.navigateTo(destination)
 }
 
-fun MovieAppState.popBackStack(): Boolean {
-    return navigationState.popBackStack()
-}
+fun MovieAppState.popBackStack(): Boolean = navigationState.popBackStack()
 
 val MovieAppState.currentTopLevelDestination: TopLevelScreen
     get() = navigationState.currentTopLevelDestination

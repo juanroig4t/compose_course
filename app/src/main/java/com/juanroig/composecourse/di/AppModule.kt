@@ -12,18 +12,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
     @Provides
     @Singleton
     @AppID
-    fun provideApplicationName(): String {
-        return BuildConfig.APPLICATION_ID
-    }
+    fun provideApplicationName(): String = BuildConfig.APPLICATION_ID
 
     @Provides
     @Singleton
     @AppVersionName
-    fun provideApplicationVersion(): String {
-        return BuildConfig.VERSION_NAME
-    }
+    fun provideApplicationVersion(): String = BuildConfig.VERSION_NAME
 }

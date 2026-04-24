@@ -9,7 +9,7 @@ spotless {
         googleJavaFormat().aosp()
         removeUnusedImports()
         trimTrailingWhitespace()
-        indentWithSpaces()
+        leadingTabsToSpaces(4)
         endWithNewline()
     }
 
@@ -18,8 +18,12 @@ spotless {
         targetExclude("$buildDir/**/*.kt")
         targetExclude('bin/**/*.kt')
         ktlint().setEditorConfigPath("$project.rootDir/.editorconfig")
+        suppressLintsFor {
+            step = 'ktlint'
+            shortCode = 'standard:function-naming'
+        }
         trimTrailingWhitespace()
-        indentWithSpaces()
+        leadingTabsToSpaces(4)
         endWithNewline()
     }
 
@@ -30,14 +34,14 @@ spotless {
 
     format 'misc', {
         target '**/*.gradle', '**/*.md', '**/.gitignore'
-        indentWithSpaces()
+        leadingTabsToSpaces(4)
         trimTrailingWhitespace()
         endWithNewline()
     }
 
     format 'xml', {
         target '**/*.xml'
-        indentWithSpaces()
+        leadingTabsToSpaces(4)
         trimTrailingWhitespace()
         endWithNewline()
     }

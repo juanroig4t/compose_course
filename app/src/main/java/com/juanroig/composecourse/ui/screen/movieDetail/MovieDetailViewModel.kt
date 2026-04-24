@@ -20,42 +20,46 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @HiltViewModel(assistedFactory = MovieDetailViewModel.Factory::class)
-class MovieDetailViewModel @AssistedInject constructor(
-    private val movieRepository: MovieRepository,
-    private val addMovieToFavoriteUseCase: AddMovieToFavoriteUseCase,
-    private val deleteMovieToFavoriteUseCase: DeleteMovieToFavoriteUseCase,
-    @Assisted private val detailScreen: DetailScreen
-) : ViewModel() {
+class MovieDetailViewModel
+    @AssistedInject
+    constructor(
+        private val movieRepository: MovieRepository,
+        private val addMovieToFavoriteUseCase: AddMovieToFavoriteUseCase,
+        private val deleteMovieToFavoriteUseCase: DeleteMovieToFavoriteUseCase,
+        @Assisted private val detailScreen: DetailScreen
+    ) : ViewModel() {
+        @AssistedFactory
+        interface Factory {
+            fun create(detailScreen: DetailScreen): MovieDetailViewModel
+        }
 
-    @AssistedFactory
-    interface Factory {
-        fun create(detailScreen: DetailScreen): MovieDetailViewModel
-    }
+        var state by mutableStateOf(DetailState())
+            private set
 
-    var state by mutableStateOf(DetailState())
-        private set
+        init {
+            movieRepository
+                .getMovieById(detailScreen.movieId)
+                .onEach { movieResult ->
+                    state =
+                        when (movieResult) {
+                            is Result.Error -> {
+                                state.copy(error = movieResult.failure)
+                            }
 
-    init {
-        movieRepository.getMovieById(detailScreen.movieId).onEach { movieResult ->
-            state = when (movieResult) {
-                is Result.Error -> {
-                    state.copy(error = movieResult.failure)
+                            is Result.Success -> {
+                                state.copy(movie = movieResult.data)
+                            }
+                        }
+                }.launchIn(viewModelScope)
+        }
+
+        fun onFavoriteClick(movie: Movie) {
+            viewModelScope.launch {
+                if (movie.isFavorite) {
+                    deleteMovieToFavoriteUseCase(movie.id)
+                } else {
+                    addMovieToFavoriteUseCase(movie.id)
                 }
-
-                is Result.Success -> {
-                    state.copy(movie = movieResult.data)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    fun onFavoriteClick(movie: Movie) {
-        viewModelScope.launch {
-            if (movie.isFavorite) {
-                deleteMovieToFavoriteUseCase(movie.id)
-            } else {
-                addMovieToFavoriteUseCase(movie.id)
             }
         }
     }
-}

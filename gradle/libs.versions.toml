@@ -24,7 +24,7 @@ room = "2.8.4"
 # DataStore is used to store data in the preferences
 dataStore = "1.0.0"
 # spotless is used to format the code
-spotless = "6.13.0"
+spotless = "8.4.0"
 #Coil is used to load images
 coil = "2.4.0"
 # Navigation compose

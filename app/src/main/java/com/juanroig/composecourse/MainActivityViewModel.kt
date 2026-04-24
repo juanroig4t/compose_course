@@ -13,21 +13,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(
-    @param:AppID private val appId: String,
-    @param:AppVersionName private val appVersionName: String
-) : ViewModel() {
+class MainActivityViewModel
+    @Inject
+    constructor(
+        @param:AppID private val appId: String,
+        @param:AppVersionName private val appVersionName: String
+    ) : ViewModel() {
+        var showSplashScreen by mutableStateOf(true)
+            private set
 
-    var showSplashScreen by mutableStateOf(true)
-        private set
+        init {
+            viewModelScope.launch {
+                delay(200)
+                showSplashScreen = false
 
-    init {
-        viewModelScope.launch {
-            delay(200)
-            showSplashScreen = false
-
-            println("App ID: $appId")
-            println("App version name: $appVersionName")
+                println("App ID: $appId")
+                println("App version name: $appVersionName")
+            }
         }
     }
-}

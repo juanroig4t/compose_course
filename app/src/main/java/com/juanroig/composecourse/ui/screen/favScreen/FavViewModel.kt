@@ -12,16 +12,19 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class FavViewModel @Inject constructor(
-    val repository: MovieRepository
-) : ViewModel() {
+class FavViewModel
+    @Inject
+    constructor(
+        val repository: MovieRepository
+    ) : ViewModel() {
+        var state by mutableStateOf(FavScreenState())
+            private set
 
-    var state by mutableStateOf(FavScreenState())
-        private set
-
-    init {
-        repository.getMovieFavList().onEach {
-            state = state.copy(listFavMovies = it)
-        }.launchIn(viewModelScope)
+        init {
+            repository
+                .getMovieFavList()
+                .onEach {
+                    state = state.copy(listFavMovies = it)
+                }.launchIn(viewModelScope)
+        }
     }
-}

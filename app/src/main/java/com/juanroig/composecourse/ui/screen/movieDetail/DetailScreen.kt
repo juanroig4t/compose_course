@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,17 +36,16 @@ import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.ui.component.FavIconButton
 import com.juanroig.composecourse.ui.extension.toYear
 import com.juanroig.composecourse.ui.theme.ComposeCourseTheme
+import java.util.Locale
 
 @Composable
 fun MovieDetailRoute(
-    contentPadding: PaddingValues,
     viewModel: MovieDetailViewModel
 ) {
     val state = viewModel.state
 
     DetailScreen(
         state = state,
-        contentPadding = contentPadding,
         onFavoriteClick = viewModel::onFavoriteClick
     )
 }
@@ -56,15 +53,12 @@ fun MovieDetailRoute(
 @Composable
 private fun DetailScreen(
     state: DetailState,
-    contentPadding: PaddingValues,
     onFavoriteClick: (Movie) -> Unit
 ) {
     state.movie?.let { movie ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(contentPadding)
-                .consumeWindowInsets(contentPadding)
                 .verticalScroll(rememberScrollState())
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -153,7 +147,7 @@ private fun ColumnScope.MoreInfoContent(movie: Movie) {
         Text(text = "|")
         Spacer(modifier = Modifier.size(8.dp))
         Icon(imageVector = Icons.Outlined.StarBorder, contentDescription = "star icon")
-        Text(text = String.format("%.1f", movie.voteAverage))
+        Text(text = String.format(Locale.getDefault(), "%.1f", movie.voteAverage))
         Text(text = "|")
         Spacer(modifier = Modifier.size(8.dp))
         Icon(imageVector = Icons.Outlined.Flag, contentDescription = "flag icon")
@@ -227,7 +221,6 @@ fun DetailScreenPreview() {
     ComposeCourseTheme {
         DetailScreen(
             state = state,
-            contentPadding = PaddingValues(),
             onFavoriteClick = {
                 movie = movie.copy(isFavorite = !movie.isFavorite)
             }

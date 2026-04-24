@@ -1,6 +1,5 @@
 package com.juanroig.composecourse.ui.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -22,7 +21,6 @@ import com.juanroig.composecourse.ui.screen.favScreen.FavScreen as FavScreenCont
 @Composable
 fun NavigationComponent(
     appState: MovieAppState,
-    innerPadding: PaddingValues,
     showDrawerMenu: (Boolean) -> Unit
 ) {
     NavDisplay(
@@ -41,7 +39,6 @@ fun NavigationComponent(
                     onNavigationIconClick = { showDrawerMenu(true) }
                 )
                 HomeScreenContent(
-                    contentPadding = innerPadding,
                     goToDetail = { movieId ->
                         appState.navigateTo(DetailScreen(movieId))
                     }
@@ -64,7 +61,6 @@ fun NavigationComponent(
                     onNavigationIconClick = { showDrawerMenu(true) }
                 )
                 FavScreenContent(
-                    contentPadding = innerPadding,
                     goToDetailMovie = { movieId ->
                         appState.navigateTo(DetailScreen(movieId))
                     }
@@ -87,7 +83,6 @@ fun NavigationComponent(
                     onNavigationIconClick = { appState.popBackStack() }
                 )
                 MovieDetailRoute(
-                    contentPadding = innerPadding,
                     viewModel = hiltViewModel<MovieDetailViewModel, MovieDetailViewModel.Factory>(
                         creationCallback = { factory ->
                             factory.create(key)

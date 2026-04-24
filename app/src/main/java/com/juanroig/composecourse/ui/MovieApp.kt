@@ -14,7 +14,6 @@ import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.juanroig.composecourse.ui.component.MovieBottomAppBar
@@ -81,7 +80,6 @@ fun MovieApp(
                 ) {
                     NavigationComponent(
                         appState = appState,
-                        innerPadding = padding,
                         showDrawerMenu = {
                             scope.launch {
                                 drawerState.open()

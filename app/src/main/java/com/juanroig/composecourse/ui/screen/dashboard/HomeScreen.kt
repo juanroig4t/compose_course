@@ -20,16 +20,20 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -49,7 +53,6 @@ import com.juanroig.composecourse.ui.screen.dashboard.model.HomeState
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    contentPadding: PaddingValues,
     goToDetail: (movieId: Int) -> Unit
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -64,19 +67,23 @@ fun HomeScreen(
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = contentPadding,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        contentPadding = PaddingValues(
+            start = 16.dp,
+            top = 4.dp,
+            end = 16.dp,
+            bottom = 16.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
             TopTenContent(state, goToDetail)
         }
 
         item {
-            Text(
-                text = "Populares",
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
+            SectionTitle(text = "Populares")
         }
 
         if (popularMovies is Result.Success) {
@@ -87,7 +94,9 @@ fun HomeScreen(
             item {
                 Text(
                     text = "No hay peliculas disponibles.",
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    modifier = Modifier.padding(vertical = 24.dp),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }
@@ -102,31 +111,45 @@ private fun PopularMovieItem(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface
         ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .fillMaxWidth()
             .clickable {
                 goToDetailMovie(movie.id)
             }
     ) {
-        Row {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             AsyncImage(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .size(width = 104.dp, height = 156.dp)
+                    .clip(MaterialTheme.shapes.medium),
                 model = "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-                contentDescription = null
+                contentDescription = null,
+                contentScale = ContentScale.Crop
             )
             Column(
                 modifier = Modifier
-                    .weight(2f)
-                    .padding(8.dp)
+                    .weight(1f)
+                    .height(156.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 Text(
                     text = "${movie.title} (${movie.releaseDate.toYear()})",
-                    style = MaterialTheme.typography.titleMedium
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    )
                 )
                 Text(
                     text = movie.overview,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis
@@ -137,25 +160,7 @@ private fun PopularMovieItem(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = SpanStyle(
-                                    fontSize = 20.sp
-                                )
-                            ) {
-                                append("Puntuacion: ")
-                            }
-                            withStyle(
-                                style = SpanStyle(
-                                    color = movie.voteAverage.getColorByRating(),
-                                    fontSize = 20.sp
-                                )
-                            ) {
-                                append("%.2f".format(movie.voteAverage))
-                            }
-                        }
-                    )
+                    RatingPill(movie.voteAverage)
 
                     FavIconButton({ setEvent(HomeEvent.OnFavoriteClick(it)) }, movie)
                 }
@@ -169,8 +174,11 @@ private fun TopTenContent(
     state: HomeState,
     goToDetailMovie: (movieId: Int) -> Unit
 ) {
-    Text(text = "Top 10", modifier = Modifier.padding(horizontal = 8.dp))
-    LazyRow {
+    SectionTitle(text = "Top 10")
+    LazyRow(
+        contentPadding = PaddingValues(vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         itemsIndexed(state.topTenMovies) { index, movie ->
             RowTopTenMovieItem(movie, index + 1, goToDetailMovie)
         }
@@ -185,11 +193,11 @@ private fun RowTopTenMovieItem(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface
         ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
         modifier = Modifier
-            .padding(6.dp)
-            .size(width = 100.dp, height = 150.dp)
+            .size(width = 132.dp, height = 198.dp)
             .clickable {
                 goToDetailMovie(movie.id)
             }
@@ -203,24 +211,98 @@ private fun RowTopTenMovieItem(
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                Color.Black.copy(alpha = 0.72f)
+                            ),
+                            startY = 80f
+                        )
+                    )
+            )
+            Surface(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(8.dp),
+                color = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                shape = MaterialTheme.shapes.small
+            ) {
+                Text(
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                    text = "#$index",
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .height(80.dp)
-                    .padding(start = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
+                    .padding(10.dp),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    modifier = Modifier
-                        .background(Color.Black.copy(alpha = 0.5f))
-                        .padding(8.dp),
-                    text = index.toString(),
+                    modifier = Modifier.weight(1f),
+                    text = movie.title,
                     color = Color.White,
-                    style = MaterialTheme.typography.displayMedium
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        fontWeight = FontWeight.SemiBold
+                    )
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun SectionTitle(text: String) {
+    Text(
+        text = text,
+        color = MaterialTheme.colorScheme.onBackground,
+        style = MaterialTheme.typography.titleLarge.copy(
+            fontWeight = FontWeight.Bold
+        )
+    )
+}
+
+@Composable
+private fun RatingPill(voteAverage: Double) {
+    Surface(
+        color = voteAverage.getColorByRating().copy(alpha = 0.14f),
+        contentColor = voteAverage.getColorByRating(),
+        shape = MaterialTheme.shapes.small
+    ) {
+        Text(
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+            text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                ) {
+                    append("Nota ")
+                }
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) {
+                    append("%.2f".format(voteAverage))
+                }
+            },
+            maxLines = 1,
+            style = MaterialTheme.typography.labelLarge
+        )
     }
 }

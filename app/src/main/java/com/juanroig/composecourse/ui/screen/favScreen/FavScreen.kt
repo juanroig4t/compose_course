@@ -31,11 +31,10 @@ import com.juanroig.composecourse.ui.extension.toYear
 @Composable
 fun FavScreen(
     viewModel: FavViewModel = hiltViewModel(),
-    contentPadding: PaddingValues,
     goToDetailMovie: (movieId: Int) -> Unit
 ) {
     LazyColumn(
-        contentPadding = contentPadding
+        contentPadding = PaddingValues(vertical = 4.dp)
     ) {
         items(viewModel.state.listFavMovies, key = { movie -> movie.id }) {
             FavItem(

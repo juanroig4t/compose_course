@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ObtainTopTenMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(): Flow<Result<List<Movie>>> {
+    operator fun invoke(): Flow<Result<List<Movie>>> {
         return movieRepository.getTopTenMovies()
     }
 }

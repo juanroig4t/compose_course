@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,7 +42,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.ui.component.FavIconButton
 import com.juanroig.composecourse.ui.extension.getColorByRating
@@ -56,7 +56,7 @@ fun HomeScreen(
     goToDetail: (movieId: Int) -> Unit
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val popularMovies = viewModel.flowLifecycleState.collectAsStateWithLifecycle().value
+    val error = state.error
 
     LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
@@ -86,18 +86,46 @@ fun HomeScreen(
             SectionTitle(text = "Populares")
         }
 
-        if (popularMovies is Result.Success) {
-            items(popularMovies.data, key = { movie -> movie.id }) { movie ->
-                PopularMovieItem(movie, goToDetail, viewModel::setEvent)
+        when {
+            state.isLoading && state.popularMovies.isEmpty() -> {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             }
-        } else {
-            item {
-                Text(
-                    text = "No hay peliculas disponibles.",
-                    modifier = Modifier.padding(vertical = 24.dp),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+
+            error != null && state.popularMovies.isEmpty() -> {
+                item {
+                    Text(
+                        text = error.data.toString(),
+                        modifier = Modifier.padding(vertical = 24.dp),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+
+            state.popularMovies.isEmpty() -> {
+                item {
+                    Text(
+                        text = "No hay peliculas disponibles.",
+                        modifier = Modifier.padding(vertical = 24.dp),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+
+            else -> {
+                items(state.popularMovies, key = { movie -> movie.id }) { movie ->
+                    PopularMovieItem(movie, goToDetail, viewModel::setEvent)
+                }
             }
         }
     }

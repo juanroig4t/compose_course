@@ -23,11 +23,14 @@ interface MovieDao {
 
     @Transaction
     @Query("SELECT * FROM MovieEntity WHERE id = :id")
-    fun getMovieById(id: Int): Flow<MovieEntity>
+    fun getMovieById(id: Int): Flow<MovieEntity?>
 
     @Query("UPDATE MovieEntity SET isFavorite = :isFavorite WHERE id = :movieId")
     suspend fun updateFavorite(movieId: Int, isFavorite: Boolean)
 
     @Query("SELECT * FROM MovieEntity WHERE isFavorite = :fav")
     fun getMovieFavList(fav: Boolean = true): Flow<List<MovieEntity>>
+
+    @Query("SELECT id FROM MovieEntity WHERE isFavorite = 1")
+    suspend fun getFavoriteMovieIds(): List<Int>
 }

@@ -5,7 +5,8 @@ import com.juanroig.composecourse.domain.model.core.error.Failure
 import com.juanroig.composecourse.domain.model.movie.Movie
 
 data class HomeState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
+    val popularMovies: List<Movie> = emptyList(),
     val topTenMovies: List<Movie> = emptyList(),
     val error: Failure? = null
 ) : UiState

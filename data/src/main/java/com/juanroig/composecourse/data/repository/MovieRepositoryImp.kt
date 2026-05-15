@@ -4,6 +4,7 @@ import com.juanroig.composecourse.data.datasource.MovieRemoteDatasource
 import com.juanroig.composecourse.data.datasource.local.db.dao.MovieDao
 import com.juanroig.composecourse.data.mapper.toDomain
 import com.juanroig.composecourse.data.mapper.toEntity
+import com.juanroig.composecourse.domain.model.core.error.CustomFailure
 import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
@@ -16,32 +17,22 @@ class MovieRepositoryImp @Inject constructor(
     private val movieRemoteDatasource: MovieRemoteDatasource
 ) : MovieRepository {
 
-    override suspend fun getTopTenMovies(): Flow<Result<List<Movie>>> {
-        var listIsEmpty = false
-        val localMovies = movieDao.getTopTenMovies().map { movieList ->
-            listIsEmpty = movieList.isEmpty()
+    override fun getTopTenMovies(): Flow<Result<List<Movie>>> {
+        return movieDao.getTopTenMovies().map { movieList ->
             Result.Success(movieList.map { it.toDomain() })
         }
-
-        if (listIsEmpty) {
-            syncMovies()
-            return localMovies
-        }
-
-        return localMovies
     }
 
     override fun getPopularMovies(): Flow<Result<List<Movie>>> {
-        return movieDao.getPopularMovies().map {
-            if (it.isEmpty()) {
-                syncMovies()
-            }
-            Result.Success(it.map { it.toDomain() })
+        return movieDao.getPopularMovies().map { movieList ->
+            Result.Success(movieList.map { it.toDomain() })
         }
     }
 
     override fun getMovieById(id: Int): Flow<Result<Movie>> {
-        return movieDao.getMovieById(id).map { Result.Success(it.toDomain()) }
+        return movieDao.getMovieById(id).map { movie ->
+            movie?.let { Result.Success(it.toDomain()) } ?: Result.Error(CustomFailure.NotFound)
+        }
     }
 
     override suspend fun syncMovies(): Result<Unit> {
@@ -51,7 +42,12 @@ class MovieRepositoryImp @Inject constructor(
                 result = Result.Error(this.failure)
             }
             if (this is Result.Success) {
-                movieDao.insertMovieList(this.data.map { it.toEntity() })
+                val favoriteMovieIds = movieDao.getFavoriteMovieIds().toSet()
+                movieDao.insertMovieList(
+                    this.data.map { movie ->
+                        movie.copy(isFavorite = movie.id in favoriteMovieIds).toEntity()
+                    }
+                )
             }
         }
 

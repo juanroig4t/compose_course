@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-    suspend fun getTopTenMovies(): Flow<Result<List<Movie>>>
+    fun getTopTenMovies(): Flow<Result<List<Movie>>>
     fun getPopularMovies(): Flow<Result<List<Movie>>>
 
     fun getMovieById(id: Int): Flow<Result<Movie>>

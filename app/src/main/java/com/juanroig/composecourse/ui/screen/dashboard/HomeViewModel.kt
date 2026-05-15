@@ -12,11 +12,8 @@ import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEffect
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEvent
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,29 +26,60 @@ class HomeViewModel
         private val deleteMovieToFavoriteUseCase: DeleteMovieToFavoriteUseCase,
         private val movieRepository: MovieRepository
     ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
-        val flowLifecycleState: StateFlow<Result<List<Movie>>> =
+        init {
+            observeTopTenMovies()
+            observePopularMovies()
+            syncMovies()
+        }
+
+        private fun observeTopTenMovies() {
+            obtainTopTenMovies()
+                .onEach { result ->
+                    when (result) {
+                        is Result.Error -> {
+                            setState { copy(isLoading = false, error = result.failure) }
+                        }
+
+                        is Result.Success -> {
+                            setState { copy(topTenMovies = result.data, error = null) }
+                        }
+                    }
+                }.launchIn(viewModelScope)
+        }
+
+        private fun observePopularMovies() {
             movieRepository
                 .getPopularMovies()
-                .stateIn(
-                    scope = viewModelScope,
-                    initialValue = Result.Success(emptyList()),
-                    started = SharingStarted.WhileSubscribed(5_000)
-                )
+                .onEach { result ->
+                    when (result) {
+                        is Result.Error -> {
+                            setState { copy(isLoading = false, error = result.failure) }
+                        }
 
-        init {
-            viewModelScope.launch {
-                obtainTopTenMovies()
-                    .onEach { result ->
-                        when (result) {
-                            is Result.Error -> {
-                                setState { copy(error = result.failure) }
-                            }
-
-                            is Result.Success -> {
-                                setState { copy(topTenMovies = result.data) }
+                        is Result.Success -> {
+                            setState {
+                                copy(
+                                    isLoading = if (result.data.isNotEmpty()) false else isLoading,
+                                    popularMovies = result.data,
+                                    error = null
+                                )
                             }
                         }
-                    }.launchIn(viewModelScope)
+                    }
+                }.launchIn(viewModelScope)
+        }
+
+        private fun syncMovies() {
+            viewModelScope.launch {
+                when (val result = movieRepository.syncMovies()) {
+                    is Result.Error -> {
+                        setState { copy(isLoading = false, error = result.failure) }
+                    }
+
+                    is Result.Success -> {
+                        setState { copy(isLoading = false, error = null) }
+                    }
+                }
             }
         }
 

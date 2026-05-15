@@ -19,6 +19,7 @@ import com.juanroig.composecourse.ui.popBackStack
 import com.juanroig.composecourse.ui.component.topBar.TopBarState
 import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailRoute
 import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailViewModel
+import com.juanroig.composecourse.ui.screen.settings.SettingsScreen as SettingsScreenContent
 import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen as HomeScreenContent
 import com.juanroig.composecourse.ui.screen.favScreen.FavScreen as FavScreenContent
 
@@ -64,7 +65,7 @@ fun NavigationComponent(
                 )
             }
             entry<SettingsScreen> {
-                Text(text = "Settings Screen")
+                SettingsScreenContent()
             }
             entry<DetailScreen> { key ->
                 MovieDetailRoute(

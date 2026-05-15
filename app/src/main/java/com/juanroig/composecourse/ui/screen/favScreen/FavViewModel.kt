@@ -15,12 +15,14 @@ import javax.inject.Inject
 class FavViewModel
     @Inject
     constructor(
-        val repository: MovieRepository
+        repository: MovieRepository
     ) : ViewModel() {
         var state by mutableStateOf(FavScreenState())
             private set
 
         init {
+            // Favorites muestra el caso mas simple: una pantalla observa Room a traves
+            // del repositorio sin introducir un use case que solo delegaria.
             repository
                 .getMovieFavList()
                 .onEach {

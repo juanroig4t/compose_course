@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -102,11 +103,9 @@ fun HomeScreen(
 
             error != null && state.popularMovies.isEmpty() -> {
                 item {
-                    Text(
-                        text = error.data.toString(),
-                        modifier = Modifier.padding(vertical = 24.dp),
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.bodyLarge
+                    ErrorContent(
+                        message = error.data.toString(),
+                        onRetryClick = viewModel::syncMovies
                     )
                 }
             }
@@ -127,6 +126,29 @@ fun HomeScreen(
                     PopularMovieItem(movie, goToDetail, viewModel::setEvent)
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun ErrorContent(
+    message: String,
+    onRetryClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text(
+            text = message,
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Button(onClick = onRetryClick) {
+            Text(text = "Reintentar")
         }
     }
 }

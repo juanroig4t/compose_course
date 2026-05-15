@@ -13,6 +13,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.juanroig.composecourse.domain.model.userPreferences.ThemeBrand
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -39,12 +40,14 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun ComposeCourseTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    themeBrand: ThemeBrand = ThemeBrand.DEFAULT,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val useDynamicColor = dynamicColor && themeBrand == ThemeBrand.DEFAULT
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        useDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }

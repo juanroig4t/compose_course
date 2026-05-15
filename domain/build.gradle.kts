@@ -42,7 +42,6 @@ kotlin {
 dependencies {
 
     implementation(libs.core.ktx)
-    implementation(libs.appcompat)
 
     // Hilt Dependency Injection
     implementation(libs.hilt.android)

@@ -8,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
-import com.juanroig.composecourse.domain.usecase.AddMovieToFavoriteUseCase
-import com.juanroig.composecourse.domain.usecase.DeleteMovieToFavoriteUseCase
 import com.juanroig.composecourse.ui.navigation.DetailScreen
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -24,8 +22,6 @@ class MovieDetailViewModel
     @AssistedInject
     constructor(
         private val movieRepository: MovieRepository,
-        private val addMovieToFavoriteUseCase: AddMovieToFavoriteUseCase,
-        private val deleteMovieToFavoriteUseCase: DeleteMovieToFavoriteUseCase,
         @Assisted private val detailScreen: DetailScreen
     ) : ViewModel() {
         @AssistedFactory
@@ -37,6 +33,8 @@ class MovieDetailViewModel
             private set
 
         init {
+            // Variante didactica: mutableStateOf es valido en Compose para una pantalla
+            // pequena; si Detail creciera, migraria bien a StateFlow<DetailState>.
             movieRepository
                 .getMovieById(detailScreen.movieId)
                 .onEach { movieResult ->
@@ -55,11 +53,9 @@ class MovieDetailViewModel
 
         fun onFavoriteClick(movie: Movie) {
             viewModelScope.launch {
-                if (movie.isFavorite) {
-                    deleteMovieToFavoriteUseCase(movie.id)
-                } else {
-                    addMovieToFavoriteUseCase(movie.id)
-                }
+                // Variante didactica simple: Detail accede al repositorio directamente
+                // porque la accion no necesita coordinar varias fuentes ni reutilizar reglas.
+                movieRepository.updateFavorite(movie.id, isFavorite = !movie.isFavorite)
             }
         }
     }

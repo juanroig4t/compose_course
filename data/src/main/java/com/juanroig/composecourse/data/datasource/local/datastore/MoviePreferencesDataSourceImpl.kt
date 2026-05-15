@@ -37,9 +37,12 @@ class MoviePreferencesDataSourceImpl @Inject constructor(
 
         return themeBrand.combine(darkTheme) { themeBrand, darkTheme ->
             UserData(
-                ThemeBrand.valueOf(themeBrand),
-                DarkThemeConfig.valueOf(darkTheme)
+                themeBrand.toEnumOrDefault(ThemeBrand.DEFAULT),
+                darkTheme.toEnumOrDefault(DarkThemeConfig.FOLLOW_SYSTEM)
             )
         }
     }
 }
+
+private inline fun <reified T : Enum<T>> String.toEnumOrDefault(default: T): T =
+    enumValues<T>().firstOrNull { it.name == this } ?: default

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class MovieRepositoryImp @Inject constructor(
+class DefaultMovieRepository @Inject constructor(
     private val movieDao: MovieDao,
     private val movieRemoteDatasource: MovieRemoteDatasource
 ) : MovieRepository {
@@ -42,10 +42,12 @@ class MovieRepositoryImp @Inject constructor(
                 result = Result.Error(this.failure)
             }
             if (this is Result.Success) {
+                // Offline-first didactico: la red no se expone directamente a la UI.
+                // Primero se fusiona con estado local del usuario y despues Room emite el cambio.
                 val favoriteMovieIds = movieDao.getFavoriteMovieIds().toSet()
                 movieDao.insertMovieList(
-                    this.data.map { movie ->
-                        movie.copy(isFavorite = movie.id in favoriteMovieIds).toEntity()
+                    data.map { movie ->
+                        movie.toEntity(isFavorite = movie.id in favoriteMovieIds)
                     }
                 )
             }

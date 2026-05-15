@@ -40,6 +40,24 @@ internal fun MovieDto.toDomain() = Movie(
     isFavorite = false
 )
 
+internal fun MovieDto.toEntity(isFavorite: Boolean) = MovieEntity(
+    id = id,
+    adult = adult,
+    backdropPath = backdropPath,
+    genreIds = genreIds,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    overview = overview,
+    popularity = popularity,
+    posterPath = posterPath,
+    releaseDate = releaseDate,
+    title = title,
+    video = video,
+    voteAverage = voteAverage,
+    voteCount = voteCount,
+    isFavorite = isFavorite
+)
+
 internal fun Movie.toEntity() = MovieEntity(
     id = id,
     adult = adult,

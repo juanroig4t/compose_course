@@ -1,7 +1,9 @@
 package com.juanroig.composecourse.data.di
 
-import com.juanroig.composecourse.data.repository.MovieRepositoryImp
+import com.juanroig.composecourse.data.repository.DefaultMovieRepository
+import com.juanroig.composecourse.data.repository.DefaultUserPreferencesRepository
 import com.juanroig.composecourse.domain.repository.MovieRepository
+import com.juanroig.composecourse.domain.repository.UserPreferencesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,6 +17,12 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindMovieRepository(
-        movieRepository: MovieRepositoryImp
+        movieRepository: DefaultMovieRepository
     ): MovieRepository
+
+    @Binds
+    @Singleton
+    fun bindUserPreferencesRepository(
+        userPreferencesRepository: DefaultUserPreferencesRepository
+    ): UserPreferencesRepository
 }

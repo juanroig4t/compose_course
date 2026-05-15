@@ -5,9 +5,8 @@ import com.juanroig.composecourse.common.BaseViewModel
 import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
-import com.juanroig.composecourse.domain.usecase.AddMovieToFavoriteUseCase
-import com.juanroig.composecourse.domain.usecase.DeleteMovieToFavoriteUseCase
-import com.juanroig.composecourse.domain.usecase.ObtainTopTenMoviesUseCase
+import com.juanroig.composecourse.domain.usecase.ObserveTopTenMoviesUseCase
+import com.juanroig.composecourse.domain.usecase.ToggleFavoriteMovieUseCase
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEffect
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeEvent
 import com.juanroig.composecourse.ui.screen.dashboard.model.HomeState
@@ -21,19 +20,20 @@ import javax.inject.Inject
 class HomeViewModel
     @Inject
     constructor(
-        private val obtainTopTenMovies: ObtainTopTenMoviesUseCase,
-        private val addMovieToFavoriteUseCase: AddMovieToFavoriteUseCase,
-        private val deleteMovieToFavoriteUseCase: DeleteMovieToFavoriteUseCase,
+        private val observeTopTenMovies: ObserveTopTenMoviesUseCase,
+        private val toggleFavoriteMovieUseCase: ToggleFavoriteMovieUseCase,
         private val movieRepository: MovieRepository
     ) : BaseViewModel<HomeEvent, HomeState, HomeEffect>() {
         init {
-            observeTopTenMovies()
+            // Home es el ejemplo principal de UDF: el ViewModel observa datos,
+            // reduce resultados a HomeState y la UI solo renderiza ese estado.
+            collectTopTenMovies()
             observePopularMovies()
             syncMovies()
         }
 
-        private fun observeTopTenMovies() {
-            obtainTopTenMovies()
+        private fun collectTopTenMovies() {
+            observeTopTenMovies()
                 .onEach { result ->
                     when (result) {
                         is Result.Error -> {
@@ -69,8 +69,9 @@ class HomeViewModel
                 }.launchIn(viewModelScope)
         }
 
-        private fun syncMovies() {
+        fun syncMovies() {
             viewModelScope.launch {
+                setState { copy(isLoading = true, error = null) }
                 when (val result = movieRepository.syncMovies()) {
                     is Result.Error -> {
                         setState { copy(isLoading = false, error = result.failure) }
@@ -85,10 +86,8 @@ class HomeViewModel
 
         private fun onFavoriteClick(movie: Movie) {
             viewModelScope.launch {
-                if (movie.isFavorite) {
-                    deleteMovieToFavoriteUseCase(movie.id)
-                } else {
-                    addMovieToFavoriteUseCase(movie.id)
+                toggleFavoriteMovieUseCase(movie)
+                if (!movie.isFavorite) {
                     setEffect { HomeEffect.NavigateToDetail(movie.id) }
                 }
             }

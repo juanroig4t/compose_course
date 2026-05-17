@@ -58,6 +58,8 @@ class ToggleFavoriteMovieUseCaseTest {
 
         override fun getPopularMovies(): Flow<Result<List<Movie>>> = emptyFlow()
 
+        override fun searchMovies(query: String): Flow<Result<List<Movie>>> = emptyFlow()
+
         override fun getMovieById(id: Int): Flow<Result<Movie>> = emptyFlow()
 
         override suspend fun syncMovies(): Result<Unit> = Result.Success(Unit)

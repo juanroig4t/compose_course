@@ -3,7 +3,6 @@ package com.juanroig.composecourse.ui.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -22,6 +21,7 @@ import com.juanroig.composecourse.ui.screen.movieDetail.MovieDetailViewModel
 import com.juanroig.composecourse.ui.screen.settings.SettingsScreen as SettingsScreenContent
 import com.juanroig.composecourse.ui.screen.dashboard.HomeScreen as HomeScreenContent
 import com.juanroig.composecourse.ui.screen.favScreen.FavScreen as FavScreenContent
+import com.juanroig.composecourse.ui.screen.search.SearchScreen as SearchScreenContent
 
 @Composable
 fun NavigationComponent(
@@ -55,7 +55,11 @@ fun NavigationComponent(
                 )
             }
             entry<SearchScreen> {
-                Text(text = "Search Screen")
+                SearchScreenContent(
+                    goToDetailMovie = { movieId ->
+                        appState.navigateTo(DetailScreen(movieId))
+                    }
+                )
             }
             entry<FavScreen> {
                 FavScreenContent(

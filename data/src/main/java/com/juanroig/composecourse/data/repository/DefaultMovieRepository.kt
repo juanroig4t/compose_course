@@ -9,6 +9,7 @@ import com.juanroig.composecourse.domain.model.core.result.Result
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -26,6 +27,15 @@ class DefaultMovieRepository @Inject constructor(
     override fun getPopularMovies(): Flow<Result<List<Movie>>> {
         return movieDao.getPopularMovies().map { movieList ->
             Result.Success(movieList.map { it.toDomain() })
+        }
+    }
+
+    override fun searchMovies(query: String): Flow<Result<List<Movie>>> {
+        return movieDao.searchMovies(query).map { movieList ->
+            val result: Result<List<Movie>> = Result.Success(movieList.map { it.toDomain() })
+            result
+        }.catch {
+            emit(Result.Error(CustomFailure.Unknown))
         }
     }
 

@@ -22,6 +22,17 @@ interface MovieDao {
     fun getPopularMovies(): Flow<List<MovieEntity>>
 
     @Transaction
+    @Query(
+        """
+        SELECT * FROM MovieEntity
+        WHERE title LIKE '%' || :query || '%'
+            OR originalTitle LIKE '%' || :query || '%'
+        ORDER BY popularity DESC
+        """
+    )
+    fun searchMovies(query: String): Flow<List<MovieEntity>>
+
+    @Transaction
     @Query("SELECT * FROM MovieEntity WHERE id = :id")
     fun getMovieById(id: Int): Flow<MovieEntity?>
 

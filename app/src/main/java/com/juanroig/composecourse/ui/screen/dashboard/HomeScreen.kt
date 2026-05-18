@@ -17,10 +17,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -43,6 +48,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.juanroig.composecourse.domain.model.core.error.CustomFailure
+import com.juanroig.composecourse.domain.model.core.error.Failure
+import com.juanroig.composecourse.domain.model.core.error.NetworkFailure
 import com.juanroig.composecourse.domain.model.movie.Movie
 import com.juanroig.composecourse.ui.component.FavIconButton
 import com.juanroig.composecourse.ui.extension.getColorByRating
@@ -104,7 +112,8 @@ fun HomeScreen(
             error != null && state.popularMovies.isEmpty() -> {
                 item {
                     ErrorContent(
-                        message = error.data.toString(),
+                        title = error.toHomeErrorTitle(),
+                        message = error.toHomeErrorMessage(),
                         onRetryClick = viewModel::syncMovies
                     )
                 }
@@ -132,26 +141,83 @@ fun HomeScreen(
 
 @Composable
 private fun ErrorContent(
+    title: String,
     message: String,
     onRetryClick: () -> Unit
 ) {
-    Column(
+    Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        color = MaterialTheme.colorScheme.errorContainer,
+        contentColor = MaterialTheme.colorScheme.onErrorContainer,
+        shape = MaterialTheme.shapes.medium
     ) {
-        Text(
-            text = message,
-            color = MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Button(onClick = onRetryClick) {
-            Text(text = "Reintentar")
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Icon(
+                modifier = Modifier.size(40.dp),
+                imageVector = Icons.Default.Warning,
+                contentDescription = null
+            )
+            Text(
+                text = title,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold
+                )
+            )
+            Text(
+                text = message,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Button(onClick = onRetryClick) {
+                Icon(
+                    modifier = Modifier.size(18.dp),
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(text = "Reintentar")
+            }
         }
     }
 }
+
+private fun Failure.toHomeErrorTitle(): String =
+    when (this) {
+        NetworkFailure.NoInternetConnection,
+        NetworkFailure.UnknownHost -> "Sin conexion"
+
+        NetworkFailure.Timeout -> "La conexion tarda demasiado"
+
+        else -> "No se pudieron cargar las peliculas"
+    }
+
+private fun Failure.toHomeErrorMessage(): String =
+    when (this) {
+        NetworkFailure.NoInternetConnection,
+        NetworkFailure.UnknownHost -> "Revisa tu conexion a internet y vuelve a intentarlo."
+
+        NetworkFailure.Timeout -> "El servidor no ha respondido a tiempo. Prueba de nuevo en unos segundos."
+
+        is NetworkFailure.ServerFailure,
+        is NetworkFailure.JsonFormat,
+        is NetworkFailure.UnexpectedNetworkError -> "Ahora mismo el servicio no esta disponible. Intentalo otra vez."
+
+        CustomFailure.NoData,
+        CustomFailure.NoResponse,
+        CustomFailure.NotFound -> "No hemos encontrado peliculas para mostrar en este momento."
+
+        else -> "Ha ocurrido un problema inesperado. Vuelve a intentarlo."
+    }
 
 @Composable
 private fun PopularMovieItem(
